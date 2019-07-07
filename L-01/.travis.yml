@@ -1,17 +1,18 @@
-language: cpp
-before_script:
-- gem install rake
-- sudo apt-get install libboost-test-dev -y
-- echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
-- sudo apt-get update -qq
-- cd L-01
-script:
-- cmake .
-- cmake --build .
-- cmake --build . --target test
-- cmake --build . --target package
-deploy:
+--- 
+before_script: 
+  - "gem install rake"
+  - "sudo apt-get install libboost-test-dev -y"
+  - "echo \"deb http://archive.ubuntu.com/ubuntu xenial main universe\" | sudo tee -a /etc/apt/sources.list"
+  - "sudo apt-get update -qq"
+  - "cd L-01"
+deploy: 
   provider: script
+  script: 
+    - "curl -T HelloWorld_0.0.$TRAVIS_BUILD_NUMBER.deb -ugwyn0431:$BINTRAY_API_KEY https://api.bintray.com/content/gwyn0431/OTUS_CPP/HelloWorld/$TRAVIS_BUILD_NUMBER/HelloWorld_0.0.$TRAVIS_BUILD_NUMBER.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
   skip_cleanup: true
-  script:
-  - curl -T HelloWorld_0.0.$TRAVIS_BUILD_NUMBER.deb -ugwyn0431:$BINTRAY_API_KEY https://api.bintray.com/content/gwyn0431/OTUS_CPP/HelloWorld/$TRAVIS_BUILD_NUMBER/HelloWorld_0.0.$TRAVIS_BUILD_NUMBER.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1
+language: cpp
+script: 
+  - "cmake ."
+  - "cmake --build ."
+  - "cmake --build . --target test"
+  - "cmake --build . --target package"
