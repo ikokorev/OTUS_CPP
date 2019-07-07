@@ -1,8 +1,13 @@
 #include "iostream"
+#include "ProjectVersionManager.h"
 
-int main()
+int main(int, char**)
 {
-    char c;
+    UProjectVersionManager::PrintProjectVersion();
     std::cout << "Hello, World!" << std::endl;
-    std::cin >> c;
+
+    char WindowFreezer;
+    std::cin >> WindowFreezer;
+
+    return 0;
 }
