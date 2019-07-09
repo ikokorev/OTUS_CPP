@@ -60,8 +60,9 @@ set_target_properties(BTestProjectVersion PROPERTIES
     INCLUDE_DIRECTORIES ${CMAKE_BINARY_DIR}
 )
 
-target_link_libraries(BTestProjectVersion 
+target_link_libraries(BTestProjectVersion PRIVATE
     ${Boost_LIBRARIES}
+    ProjectVersionManager
 )
 
 target_link_libraries(HelloWorld PRIVATE ProjectVersionManager)
