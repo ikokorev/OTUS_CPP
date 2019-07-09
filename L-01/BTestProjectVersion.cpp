@@ -1,16 +1,16 @@
-// #include <boost/test/unit_test.hpp>
+#define BOOST_TEST_MODULE BTestProjectVersion
 
-// #define BOOST_TEST_MODULE BTestProjectVersion
-// BOOST_AUTO_TEST_SUITE(BTestProjectVersion)
+#include "ProjectVersion.h"
+#include <boost/test/unit_test.hpp>
 
-// BOOST_AUTO_TEST_CASE(IsProjectVersionCorrect)
-// {
-//     BOOST_CHECK(-1 > 0);
-// }
+BOOST_AUTO_TEST_SUITE(BTestProjectVersion)
 
-// }
-
-int main()
+BOOST_AUTO_TEST_CASE(IsProjectVersionCorrect)
 {
-    return 0;
+    BOOST_CHECK(FProjectVerison::Major >= 0);
+    BOOST_CHECK(FProjectVerison::Minor >= 0);
+    BOOST_CHECK(FProjectVerison::Patch > 0);
 }
+
+}
+

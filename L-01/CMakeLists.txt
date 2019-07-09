@@ -6,13 +6,6 @@ else()
     project(HelloWorld VERSION 0.0.1)
 endif()
 
-# disabled for now, until I figure out why BTestProjectVersion can't open BOOST_LIBRARYDIR.lib
-#set(BOOST_ROOT "C:\\Users\\gwyn0431\\Downloads\\Boost_1.70.0\\boost_1_70_0")
-#set(BOOST_INCLUDEDIR "C:\\Users\\gwyn0431\\Downloads\\Boost_1.70.0\\boost_1_70_0")
-#set(BOOST_LIBRARYDIR "C:\\Users\\gwyn0431\\Downloads\\Boost_1.70.0\\boost_1_70_0\\stage\\lib")
-#set(Boost_USE_STATIC_LIBS ON)
-#find_package(Boost COMPONENTS unit_test_framework REQUIRED)
-
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
@@ -41,6 +34,12 @@ add_subdirectory(
 
 configure_file(ProjectVersion.h.in ProjectVersion.h)
 
+#set(BOOST_ROOT "C:\\Users\\gwyn0431\\Downloads\\Boost_1.70.0\\boost_1_70_0")
+#set(BOOST_INCLUDEDIR "${BOOST_ROOT}/boost")
+#set(BOOST_LIBRARYDIR "${BOOST_ROOT}")
+
+find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+
 add_executable(HelloWorld Main.cpp)
 add_library(ProjectVersionManager ProjectVersionManager.cpp)
 add_executable(BTestProjectVersion BTestProjectVersion.cpp)
@@ -52,14 +51,19 @@ set_target_properties(HelloWorld ProjectVersionManager BTestProjectVersion GTest
 )
 
 target_include_directories(ProjectVersionManager PRIVATE "${CMAKE_BINARY_DIR}")
-target_include_directories(BTestProjectVersion PRIVATE "${CMAKE_BINARY_DIR}")
 target_include_directories(GTestProjectVersion PRIVATE "${CMAKE_BINARY_DIR}")
+target_include_directories(BTestProjectVersion PRIVATE "${Boost_INCLUDE_DIR}")
 
-# set_target_properties(BTestProjectVersion PROPERTIES
-#     COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
-#     INCLUDE_DIRECTORIES ${BOOST_INCLUDEDIR}
-# )
-#target_link_libraries(BTestProjectVersion PRIVATE BOOST_LIBRARYDIR)
+set_target_properties(BTestProjectVersion PROPERTIES
+    COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
+    INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
+    INCLUDE_DIRECTORIES ${CMAKE_BINARY_DIR}
+)
+
+target_link_libraries(BTestProjectVersion 
+    ${Boost_LIBRARIES}
+    ProjectVersion
+)
 
 target_link_libraries(HelloWorld PRIVATE ProjectVersionManager)
 target_link_libraries(GTestProjectVersion PRIVATE gtest_main)
