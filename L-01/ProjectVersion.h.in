@@ -1,8 +1,10 @@
 #pragma once
 
-struct FProjectVerison
+struct FProjectVersion
 {
-    static const int Major = @PROJECT_VERSION_MAJOR@;
-    static const int Minor = @PROJECT_VERSION_MINOR@;
-    static const int Patch = @PROJECT_VERSION_PATCH@;
+    FProjectVersion() = default;
+
+    const int Major = @PROJECT_VERSION_MAJOR@;
+    const int Minor = @PROJECT_VERSION_MINOR@;
+    const int Patch = @PROJECT_VERSION_PATCH@;
 };
