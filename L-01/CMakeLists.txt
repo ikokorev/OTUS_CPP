@@ -62,7 +62,6 @@ set_target_properties(BTestProjectVersion PROPERTIES
 
 target_link_libraries(BTestProjectVersion 
     ${Boost_LIBRARIES}
-    ProjectVersion
 )
 
 target_link_libraries(HelloWorld PRIVATE ProjectVersionManager)
