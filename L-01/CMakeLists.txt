@@ -67,6 +67,10 @@ target_link_libraries(BTestProjectVersion
 target_link_libraries(HelloWorld PRIVATE ProjectVersionManager)
 target_link_libraries(GTestProjectVersion PRIVATE gtest_main)
 
+set_target_properties(GTestProjectVersion PROPERTIES
+    INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
+)
+
 if (MSVC)
     target_compile_options(HelloWorld PRIVATE
         /W4
