@@ -1,6 +1,6 @@
 #define BOOST_TEST_MODULE BTestProjectVersion
 
-#include "ProjectVersionManager.h"
+#include "ProjectVersionManager.cpp"
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE(BTestProjectVersion)
