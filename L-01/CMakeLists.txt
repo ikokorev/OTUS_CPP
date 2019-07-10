@@ -47,10 +47,7 @@ set_target_properties(HelloWorld ProjectVersionManager BTestProjectVersion GTest
 )
 
 target_include_directories(ProjectVersionManager PRIVATE "${CMAKE_BINARY_DIR}")
-
-set_target_properties(GTestProjectVersion PROPERTIES
-    INCLUDE_DIRECTORIES ${CMAKE_BINARY_DIR}
-)
+target_include_directories(GTestProjectVersion PRIVATE "${CMAKE_BINARY_DIR}")
 
 target_link_libraries(HelloWorld PRIVATE ProjectVersionManager)
 target_link_libraries(BTestProjectVersion PRIVATE "${Boost_LIBRARIES}")

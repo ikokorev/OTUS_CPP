@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
 #include "ProjectVersion.h"
+#include "gtest/gtest.h"
 
 TEST(TestProjectVersion, IsProjectVersionCorrect) {
   EXPECT_GE(FProjectVersion::Major, 0);
