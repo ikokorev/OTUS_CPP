@@ -13,4 +13,4 @@ deploy:
   provider: script
   skip_cleanup: true
   script:
-  - curl -T HelloWorld_0.0.$TRAVIS_BUILD_NUMBER.deb -ugwyn0431:$BINTRAY_API_KEY https://api.bintray.com/content/gwyn0431/OTUS_CPP/HelloWorld/$TRAVIS_BUILD_NUMBER/HelloWorld_0.0.$TRAVIS_BUILD_NUMBER.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1
+  - curl -T HelloWorld_0.0.$TRAVIS_BUILD_NUMBER.deb -ugwyn0431:$BINTRAY_API_KEY https://api.bintray.com/content/gwyn0431/OTUS_CPP/HelloWorld/1/HelloWorld_0.0.$TRAVIS_BUILD_NUMBER.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1
