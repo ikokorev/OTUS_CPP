@@ -49,9 +49,14 @@ set_target_properties(HelloWorld ProjectVersionManager BTestProjectVersion GTest
 target_include_directories(ProjectVersionManager PRIVATE "${CMAKE_BINARY_DIR}")
 target_include_directories(GTestProjectVersion PRIVATE "${CMAKE_BINARY_DIR}")
 
+target_link_libraries(BTestProjectVersion PRIVATE
+    ${Boost_LIBRARIES}
+    ProjectVersionManager
+)
+
 target_link_libraries(HelloWorld PRIVATE ProjectVersionManager)
-target_link_libraries(BTestProjectVersion PRIVATE "${Boost_LIBRARIES}")
 target_link_libraries(GTestProjectVersion PRIVATE gtest_main)
+target_link_libraries(GTestProjectVersion PRIVATE ProjectVersionManager)
 
 set_target_properties(BTestProjectVersion PROPERTIES
     COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
