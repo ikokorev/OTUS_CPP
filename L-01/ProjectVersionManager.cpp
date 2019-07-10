@@ -3,18 +3,12 @@
 #include <string>
 #include "ProjectVersion.h"
 
-FProjectVersion UProjectVersionManager::GetProjectVersion()
-{
-    return FProjectVersion();
-}
-
 void UProjectVersionManager::PrintProjectVersion()
 {
-    FProjectVersion ProjectVersion = GetProjectVersion();
-    std::string ProjectVersionStr = 
-        std::to_string(ProjectVersion.Major) + "." +
-        std::to_string(ProjectVersion.Minor) + "." +
-        std::to_string(ProjectVersion.Patch);
+    std::string ProjectVersion = 
+        std::to_string(FProjectVersion::Major) + "." +
+        std::to_string(FProjectVersion::Minor) + "." +
+        std::to_string(FProjectVersion::Patch);
 
-    std::cout << "Current Project Version: " << ProjectVersionStr << std::endl;
+    std::cout << "Current Project Version: " << ProjectVersion << std::endl;
 }

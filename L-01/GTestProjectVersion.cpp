@@ -1,12 +1,10 @@
 #include "gtest/gtest.h"
-#include "ProjectVersionManager.cpp"
-
-FProjectVersion ProjectVersion = UProjectVersionManager::GetProjectVersion();
+#include "ProjectVersion.h"
 
 TEST(TestProjectVersion, IsProjectVersionCorrect) {
-  EXPECT_GE(ProjectVersion.Major, 0);
-  EXPECT_GE(ProjectVersion.Minor, 0);
-  EXPECT_GT(ProjectVersion.Patch, 0);
+  EXPECT_GE(FProjectVersion::Major, 0);
+  EXPECT_GE(FProjectVersion::Minor, 0);
+  EXPECT_GT(FProjectVersion::Patch, 0);
 }
 
 int main(int argc, char **argv)

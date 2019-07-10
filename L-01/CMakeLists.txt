@@ -34,10 +34,6 @@ add_subdirectory(
 
 configure_file(ProjectVersion.h.in ProjectVersion.h)
 
-#set(BOOST_ROOT "C:\\Users\\gwyn0431\\Downloads\\Boost_1.70.0\\boost_1_70_0")
-#set(BOOST_INCLUDEDIR "${BOOST_ROOT}/boost")
-#set(BOOST_LIBRARYDIR "${BOOST_ROOT}")
-
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 add_executable(HelloWorld Main.cpp)
@@ -52,22 +48,16 @@ set_target_properties(HelloWorld ProjectVersionManager BTestProjectVersion GTest
 
 target_include_directories(ProjectVersionManager PRIVATE "${CMAKE_BINARY_DIR}")
 target_include_directories(GTestProjectVersion PRIVATE "${CMAKE_BINARY_DIR}")
-target_include_directories(BTestProjectVersion PRIVATE "${Boost_INCLUDE_DIR}")
+
+target_link_libraries(HelloWorld PRIVATE ProjectVersionManager)
+target_link_libraries(BTestProjectVersion PRIVATE "${Boost_LIBRARIES}")
+target_link_libraries(GTestProjectVersion PRIVATE gtest_main)
 
 set_target_properties(BTestProjectVersion PROPERTIES
     COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
     INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
     INCLUDE_DIRECTORIES ${CMAKE_BINARY_DIR}
 )
-
-target_link_libraries(BTestProjectVersion PRIVATE
-    ${Boost_LIBRARIES}
-    ProjectVersionManager
-)
-
-target_link_libraries(HelloWorld PRIVATE ProjectVersionManager)
-target_link_libraries(GTestProjectVersion PRIVATE gtest_main)
-target_link_libraries(GTestProjectVersion PRIVATE ProjectVersionManager)
 
 if (MSVC)
     target_compile_options(HelloWorld PRIVATE
