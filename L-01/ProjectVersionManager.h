@@ -1,11 +1,13 @@
 #pragma once
 
+#include "ProjectVersion.h"
+
 class UProjectVersionManager
 {
 
 public:
 
-    static struct FProjectVersion GetProjectVersion();
+    static FProjectVersion GetProjectVersion();
 
     static void PrintProjectVersion();
     
