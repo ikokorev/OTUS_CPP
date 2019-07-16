@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "ProjectVersionManager.cpp"
+#include "ProjectVersionManager.h"
 
 FProjectVersion ProjectVersion = UProjectVersionManager::GetProjectVersion();
 
