@@ -84,5 +84,5 @@ set(CPACK_PACKAGE_CONTACT gwyn0431@gmail.com)
 
 include(CPack)
 
-#enable_testing()
+enable_testing()
 #add_test(GTestProjectVersion GTestProjectVersion)
