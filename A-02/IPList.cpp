@@ -1,5 +1,6 @@
 #include "IPList.h"
 #include <iostream>
+#include <algorithm>
 
 void IPList::SortLexicographically(bool bShouldReverse /* = false */)
 {
