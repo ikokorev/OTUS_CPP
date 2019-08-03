@@ -6,7 +6,7 @@ void IPList::SortLexicographically(bool bShouldReverse /* = false */)
 {
     auto Comparator = [bShouldReverse](const IPAddress& LhsIP, const IPAddress& RhsIP) -> bool 
     {
-        int MaxIPBytesNum = LhsIP.size();
+        int MaxIPBytesNum = static_cast<int>(LhsIP.size());
 
         for(int IPByteNum = 0; IPByteNum < MaxIPBytesNum; ++IPByteNum)
         {

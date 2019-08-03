@@ -39,7 +39,7 @@ std::string IPPool::FindIPInString(const std::string& String) const
 IPAddress IPPool::DigitizeIPString(const std::string& IPAsString) const
 {
     IPAddress IP;
-    int MaxIPBytesNum = IP.size();
+    int MaxIPBytesNum = static_cast<int>(IP.size());
     
     std::string::size_type Start = 0;
     std::string::size_type Stop = IPAsString.find_first_of(".");

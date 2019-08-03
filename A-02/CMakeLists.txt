@@ -52,13 +52,13 @@ set_target_properties(ip_filter IPList IPPool PROPERTIES
 
 if (MSVC)
     target_compile_options(ip_filter PRIVATE
-        /W4
+        /WX
     )
     target_compile_options(IPList PRIVATE
-        /W4
+        /WX
     )
     target_compile_options(IPPool PRIVATE
-        /W4
+        /WX
     )
 else ()
     target_compile_options(ip_filter PRIVATE
