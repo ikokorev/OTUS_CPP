@@ -25,12 +25,13 @@ public:
         IPList CurrByteFilteredIPs;
         
         std::vector<int> RequiredBytesVec{RequiredBytesOrdered...};        
+        int RequiredBytesNum = static_cast<int>(RequiredBytesVec.size());
         int MaxIPBytesNum = 4;
 
         for 
         (
             int ByteNum = 0; 
-            ByteNum < RequiredBytesVec.size() && ByteNum < MaxIPBytesNum; 
+            ByteNum < RequiredBytesNum && ByteNum < MaxIPBytesNum; 
             ++ByteNum, ListToFilter = CurrByteFilteredIPs
         )
         {
@@ -56,12 +57,13 @@ public:
         IPList CurrByteFilteredIPs;
         
         std::vector<int> RequiredBytesVec{RequiredBytes...};        
+        int RequiredBytesNum = static_cast<int>(RequiredBytesVec.size());
         int MaxIPBytesNum = 4;
 
         for 
         (
             int ByteNum = 0; 
-            ByteNum < RequiredBytesVec.size() && ByteNum < MaxIPBytesNum; 
+            ByteNum < RequiredBytesNum && ByteNum < MaxIPBytesNum; 
             ++ByteNum, ListToFilter = CurrByteFilteredIPs
         )
         {
