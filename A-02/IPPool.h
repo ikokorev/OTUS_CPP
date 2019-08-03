@@ -21,27 +21,29 @@ public:
     template<typename... Args>
     IPList GetIPsWithBytesOrdered(Args... RequiredBytesOrdered)
     {
-        IPList ListToFilter = PoolIPList;
+        IPList ListToFilter {PoolIPList};
         IPList CurrByteFilteredIPs;
         
-        std::vector<int> RequiredBytesVec{RequiredBytesOrdered...};        
-        int RequiredBytesNum = static_cast<int>(RequiredBytesVec.size());
-        int MaxIPBytesNum = 4;
+        // Just playing with move semantics here. I understand it makes no sense to use it with
+        // few ints, but with really big object it could be reasonable.
+        std::vector<int> RequiredBytesVec{std::move(RequiredBytesOrdered)...};        
+        int RequiredBytesNum {static_cast<int>(RequiredBytesVec.size())};
+        int MaxIPBytesNum {4};
 
         for 
         (
-            int ByteNum = 0; 
+            int ByteNum {0}; 
             ByteNum < RequiredBytesNum && ByteNum < MaxIPBytesNum; 
             ++ByteNum, ListToFilter = CurrByteFilteredIPs
         )
         {
             CurrByteFilteredIPs.GetIPAddresses().clear();
             
-            for (auto IPAddress : ListToFilter.GetIPAddresses())
+            for (auto& IPAddress : ListToFilter.GetIPAddresses())
             {
                 if (IPAddress[ByteNum] == RequiredBytesVec[ByteNum])
                 {
-                    CurrByteFilteredIPs.GetIPAddresses().push_back(IPAddress);
+                    CurrByteFilteredIPs.GetIPAddresses().push_back(std::move(IPAddress));
                 }
             }
         }
@@ -56,26 +58,26 @@ public:
         IPList ListToFilter = PoolIPList;
         IPList CurrByteFilteredIPs;
         
-        std::vector<int> RequiredBytesVec{RequiredBytes...};        
-        int RequiredBytesNum = static_cast<int>(RequiredBytesVec.size());
-        int MaxIPBytesNum = 4;
+        std::vector<int> RequiredBytesVec{std::move(RequiredBytes)...};        
+        int RequiredBytesNum {static_cast<int>(RequiredBytesVec.size())};
+        int MaxIPBytesNum {4};
 
         for 
         (
-            int ByteNum = 0; 
+            int ByteNum {0}; 
             ByteNum < RequiredBytesNum && ByteNum < MaxIPBytesNum; 
             ++ByteNum, ListToFilter = CurrByteFilteredIPs
         )
         {
             CurrByteFilteredIPs.GetIPAddresses().clear();
             
-            for (auto IPAddress : ListToFilter.GetIPAddresses())
+            for (auto& IPAddress : ListToFilter.GetIPAddresses())
             {
-                for (auto IPByte : IPAddress)
+                for (auto& IPByte : IPAddress)
                 {
                     if (IPByte == RequiredBytesVec[ByteNum])
                     {
-                        CurrByteFilteredIPs.GetIPAddresses().push_back(IPAddress);                        
+                        CurrByteFilteredIPs.GetIPAddresses().push_back(std::move(IPAddress));                        
                         break; // we don't need IP address to be added several times, if it has required byte at several positions
                     }
                 }
@@ -91,7 +93,8 @@ private:
 
     std::string FindIPInString(const std::string& String) const;
 
-    IPAddress DigitizeIPString(const std::string& IPAsString) const;
+    /** Returns IPAddress, initiated with bytes from IP string. */
+    IPAddress ConvertIPStringToAddress(const std::string& IPAsString) const;
 
     IPList PoolIPList;
 };

@@ -8,11 +8,15 @@ int main()
         IPPool IPPool;
         IPPool.FillPoolFromInput();
         
-        IPList PoolIPs = IPPool.GetIPAddresses();
+        IPList PoolIPs {IPPool.GetIPAddresses()};
         PoolIPs.SortLexicographically(true);
         PoolIPs.OutputList();
         
-        IPList FilteredIPs = IPPool.GetIPsWithBytesOrdered(1);
+        // move ctor will be automatically called here, cause GetIPsWithBytesOrdered returns its local
+        // variable as result, which automatically converts to r-value reference. 
+        // move assignment operators will be called on further FiltereIPs assignments below, for the
+        // same reason.
+        IPList FilteredIPs {IPPool.GetIPsWithBytesOrdered(1)};
         FilteredIPs.SortLexicographically(true);
         FilteredIPs.OutputList();
 
