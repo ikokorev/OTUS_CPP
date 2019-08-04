@@ -1,6 +1,12 @@
 #include "IPPool.h"
 #include <iostream>
 #include <algorithm>
+#include "gtest/gtest.h"
+
+bool IPPool::bAreAllIPsValid = true;
+TEST(CheckIPs, AreAllIPsValid) {
+    EXPECT_TRUE(IPPool::bAreAllIPsValid);
+}
 
 void IPPool::FillPoolFromInput()
 {
@@ -45,9 +51,22 @@ IPAddress IPPool::ConvertIPStringToAddress(const std::string& IPAsString) const
     std::string::size_type Start {0};
     std::string::size_type Stop {IPAsString.find_first_of(".")};
     
+    bool bIsIPByteValid = true;
     for (int IPByteNum = 0; IPByteNum < MaxIPBytesNum; ++IPByteNum)
     {
-        IP[IPByteNum] = std::stoi(IPAsString.substr(Start, Stop - Start));
+        int IPByteValue = std::stoi(IPAsString.substr(Start, Stop - Start));
+        
+        // Validating IP byte value via google test. If some byte of ip isn't valid
+        EXPECT_GE(IPByteValue, 0) << (bIsIPByteValid = false);
+        EXPECT_LE(IPByteValue, 255) << (bIsIPByteValid = false);
+
+        // If any IP byte of any IP isn't valid, all IPs no longer considere valid
+        if (!bIsIPByteValid)
+        {
+            bAreAllIPsValid = false;
+        }
+        
+        IP[IPByteNum] = IPByteValue;
 
         Start = Stop + 1;
         Stop = IPAsString.find_first_of(".", Start);
@@ -55,3 +74,5 @@ IPAddress IPPool::ConvertIPStringToAddress(const std::string& IPAsString) const
     
     return IP;   
 }
+
+

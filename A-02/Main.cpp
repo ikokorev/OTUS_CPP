@@ -1,8 +1,11 @@
 #include "IPPool.h"
 #include <iostream>
+#include "gtest/gtest.h"
 
-int main()
+int main(int argc, char **argv)
 {
+    testing::InitGoogleTest(&argc, argv);
+
     try
     {
         IPPool IPPool;
@@ -33,5 +36,5 @@ int main()
         std::cerr << e.what() << std::endl;
     }
 
-    return 0;
+    return RUN_ALL_TESTS();
 }

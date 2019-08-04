@@ -87,6 +87,8 @@ public:
         return ListToFilter;
     }
 
+    static bool bAreAllIPsValid;
+
 private:
 
     IPAddress GetIPFromString(const std::string& String) const;

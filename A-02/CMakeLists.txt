@@ -6,49 +6,27 @@ else()
     project(IPFilter VERSION 0.0.1)
 endif()
 
-# # Download and unpack googletest at configure time
-# configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
-# execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-#   RESULT_VARIABLE result
-#   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
-# if(result)
-#   message(FATAL_ERROR "CMake step for googletest failed: ${result}")
-# endif()
-# execute_process(COMMAND ${CMAKE_COMMAND} --build .
-#   RESULT_VARIABLE result
-#   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
-# if(result)
-#   message(FATAL_ERROR "Build step for googletest failed: ${result}")
-# endif()
-
-# # Prevent overriding the parent project's compiler/linker
-# # settings on Windows
-# set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-# # Add googletest directly to our build. This defines
-# # the gtest and gtest_main targets.
-# add_subdirectory(
-#     ${CMAKE_CURRENT_BINARY_DIR}/googletest-src
-#     ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
-#     EXCLUDE_FROM_ALL)
-
-# #configure_file(ProjectVersion.h.in ProjectVersion.h)
-
 add_executable(ip_filter Main.cpp)
 add_library(IPList IPList.cpp)
 add_library(IPPool IPPool.cpp)
 
+# Enable testing and adding gtest to project
+enable_testing()
+add_subdirectory(../googletest googletest)
+include_directories(${CMAKE_SOURCE_DIR}/../googletest/include)
 
-target_link_libraries(IPPool IPList)
-target_link_libraries(ip_filter IPPool)
-#add_executable(GTestProjectVersion GTestProjectVersion.cpp)
+target_link_libraries(IPPool IPList gtest gtest_main)
+target_link_libraries(ip_filter PUBLIC IPPool gtest gtest_main)
 
 set_target_properties(ip_filter IPList IPPool PROPERTIES
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
 )
 
-#target_include_directories(GTestProjectVersion PRIVATE "${CMAKE_BINARY_DIR}")
+# Those are needed so gtest won't conflict with proj files runtime library mode
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MTd")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MTd")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
 if (MSVC)
     target_compile_options(ip_filter PRIVATE
@@ -83,6 +61,3 @@ set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 set(CPACK_PACKAGE_CONTACT gwyn0431@gmail.com)
 
 include(CPack)
-
-enable_testing()
-#add_test(GTestProjectVersion GTestProjectVersion)
