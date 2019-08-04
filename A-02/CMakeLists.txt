@@ -23,12 +23,13 @@ set_target_properties(ip_filter IPList IPPool PROPERTIES
     CXX_STANDARD_REQUIRED ON
 )
 
-# Those are needed so gtest won't conflict with proj files runtime library mode
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MTd")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MTd")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-
 if (MSVC)
+    # Those are needed so gtest won't conflict with proj files runtime library mode, when compiling
+    # with MSVC
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MTd")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MTd")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+
     target_compile_options(ip_filter PRIVATE
         /WX
     )
