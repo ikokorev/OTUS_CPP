@@ -1,5 +1,9 @@
 language: cpp
+git:
+  submodules: false
 before_script:
+- sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+- git submodule update --init --recursive
 - sudo apt-get install libboost-test-dev -y
 - echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
 - sudo apt-get update -qq
