@@ -7,7 +7,6 @@ else()
 endif()
 
 add_executable(ip_filter Main.cpp)
-add_library(IPList IPList.cpp)
 add_library(IPPool IPPool.cpp)
 
 # Enable testing and adding gtest to project
@@ -15,10 +14,10 @@ enable_testing()
 add_subdirectory(../googletest googletest)
 include_directories(${CMAKE_SOURCE_DIR}/../googletest/include)
 
-target_link_libraries(IPPool IPList gtest gtest_main)
+target_link_libraries(IPPool gtest gtest_main)
 target_link_libraries(ip_filter PUBLIC IPPool gtest gtest_main)
 
-set_target_properties(ip_filter IPList IPPool PROPERTIES
+set_target_properties(ip_filter IPPool PROPERTIES
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
 )
@@ -33,17 +32,11 @@ if (MSVC)
     target_compile_options(ip_filter PRIVATE
         /WX
     )
-    target_compile_options(IPList PRIVATE
-        /WX
-    )
     target_compile_options(IPPool PRIVATE
         /WX
     )
 else ()
     target_compile_options(ip_filter PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
-    target_compile_options(IPList PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
     target_compile_options(IPPool PRIVATE

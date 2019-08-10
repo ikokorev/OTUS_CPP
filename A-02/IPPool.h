@@ -10,7 +10,7 @@ public:
 
     void FillPoolFromInput();
 
-    void AddIPToPool(const IPAddress& IP);
+    void AddIPToPool(const IPAddress&& IP);
 
     IPList GetIPAddresses() const { return PoolIPList; }
 
@@ -37,13 +37,13 @@ public:
             ++ByteNum, ListToFilter = CurrByteFilteredIPs
         )
         {
-            CurrByteFilteredIPs.GetIPAddresses().clear();
+            CurrByteFilteredIPs.clear();
             
-            for (auto& IPAddress : ListToFilter.GetIPAddresses())
+            for (auto& IPAddress : ListToFilter)
             {
                 if (IPAddress[ByteNum] == RequiredBytesVec[ByteNum])
                 {
-                    CurrByteFilteredIPs.GetIPAddresses().push_back(std::move(IPAddress));
+                    CurrByteFilteredIPs.push_back(std::move(IPAddress));
                 }
             }
         }
@@ -69,15 +69,15 @@ public:
             ++ByteNum, ListToFilter = CurrByteFilteredIPs
         )
         {
-            CurrByteFilteredIPs.GetIPAddresses().clear();
+            CurrByteFilteredIPs.clear();
             
-            for (auto& IPAddress : ListToFilter.GetIPAddresses())
+            for (auto& IPAddress : ListToFilter)
             {
                 for (auto& IPByte : IPAddress)
                 {
                     if (IPByte == RequiredBytesVec[ByteNum])
                     {
-                        CurrByteFilteredIPs.GetIPAddresses().push_back(std::move(IPAddress));                        
+                        CurrByteFilteredIPs.push_back(std::move(IPAddress));                        
                         break; // we don't need IP address to be added several times, if it has required byte at several positions
                     }
                 }
@@ -87,16 +87,20 @@ public:
         return ListToFilter;
     }
 
-    static bool bAreAllIPsValid;
-
 private:
 
-    IPAddress GetIPFromString(const std::string& String) const;
+    /* Returns true if managed to obtain valid IP from string. The result is written in out IPAddress parameter. */
+    bool GetIPFromString(const std::string& String, IPAddress& OutIP) const;
 
     std::string FindIPInString(const std::string& String) const;
 
-    /** Returns IPAddress, initiated with bytes from IP string. */
-    IPAddress ConvertIPStringToAddress(const std::string& IPAsString) const;
+    /* 
+     * Returns true if all ip bytes from string of valid value, false if any byte value isn't valid. 
+     * The result is written in out IPAddress parameter. 
+     */
+    bool ConvertIPStringToAddress(const std::string& IPAsString, IPAddress& OutIP) const;
+
+    bool IsByteValueValid(int ByteValue) const;
 
     IPList PoolIPList;
 };

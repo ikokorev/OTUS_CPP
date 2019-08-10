@@ -1,33 +1,27 @@
 #include "IPPool.h"
 #include <iostream>
 #include <algorithm>
-#include "gtest/gtest.h"
-
-bool IPPool::bAreAllIPsValid = true;
-TEST(CheckIPs, AreAllIPsValid) {
-    EXPECT_TRUE(IPPool::bAreAllIPsValid);
-}
 
 void IPPool::FillPoolFromInput()
 {
+    IPAddress OutIP;
     for(std::string InputLine; std::getline(std::cin, InputLine);)
     {
-        // Move semantics will be used during IP push_back by default, cause GetIPFromString obtains and 
-        // returns IPAddress from function (ConvertIPStringToAddress), which return its local IPAddress 
-        // variable as result, so it automatically converts to r-value reference. I tested that principle 
-        // on provided from source Tracer class, and it worked.
-        AddIPToPool(GetIPFromString(InputLine));
+        if (GetIPFromString(InputLine, OutIP))
+        {
+            AddIPToPool(std::move(OutIP));
+        }
     }
 }
 
-void IPPool::AddIPToPool(const IPAddress& IP)
+void IPPool::AddIPToPool(const IPAddress&& IP)
 {
-    PoolIPList.GetIPAddresses().push_back(IP);
+    PoolIPList.push_back(IP);
 }
 
-IPAddress IPPool::GetIPFromString(const std::string& String) const
+bool IPPool::GetIPFromString(const std::string& String, IPAddress& OutIP) const
 {
-    return ConvertIPStringToAddress(FindIPInString(String));
+    return ConvertIPStringToAddress(FindIPInString(String), OutIP);
 }
 
 std::string IPPool::FindIPInString(const std::string& String) const
@@ -43,36 +37,34 @@ std::string IPPool::FindIPInString(const std::string& String) const
     return std::string();
 }
 
-IPAddress IPPool::ConvertIPStringToAddress(const std::string& IPAsString) const
+bool IPPool::ConvertIPStringToAddress(const std::string& IPAsString, IPAddress& OutIP) const
 {
-    IPAddress IP;
-    int MaxIPBytesNum {static_cast<int>(IP.size())};
-    
+    int MaxIPBytesNum {static_cast<int>(OutIP.size())};
+    bool bAreAllIPBytesValid = true;
+
     std::string::size_type Start {0};
     std::string::size_type Stop {IPAsString.find_first_of(".")};
     
-    bool bIsIPByteValid = true;
     for (int IPByteNum = 0; IPByteNum < MaxIPBytesNum; ++IPByteNum)
     {
         int IPByteValue = std::stoi(IPAsString.substr(Start, Stop - Start));
         
-        // Validating IP byte value via google test. If some byte of ip isn't valid
-        EXPECT_GE(IPByteValue, 0) << (bIsIPByteValid = false);
-        EXPECT_LE(IPByteValue, 255) << (bIsIPByteValid = false);
-
-        // If any IP byte of any IP isn't valid, all IPs no longer considere valid
-        if (!bIsIPByteValid)
+        if (!IsByteValueValid(IPByteValue))
         {
-            bAreAllIPsValid = false;
+            bAreAllIPBytesValid = false;
+            break;
         }
         
-        IP[IPByteNum] = IPByteValue;
+        OutIP[IPByteNum] = IPByteValue;
 
         Start = Stop + 1;
         Stop = IPAsString.find_first_of(".", Start);
     }
     
-    return IP;   
+    return bAreAllIPBytesValid;   
 }
 
-
+bool IPPool::IsByteValueValid(int ByteValue) const
+{
+    return ByteValue >= 0 && ByteValue <= 255;
+}
