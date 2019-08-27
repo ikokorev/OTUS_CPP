@@ -4,7 +4,7 @@
 #include <list>
 #include <vector>
 
-size_t Factorial(size_t Number)
+int Factorial(int Number)
 {
     if(Number < 0)
     {
