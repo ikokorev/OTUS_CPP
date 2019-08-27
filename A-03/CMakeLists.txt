@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.2)
 
 if(DEFINED ENV{TRAVIS_BUILD_NUMBER})
-    project(allocator VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
+    project(Allocator VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 else()
-    project(allocator VERSION 0.0.1)
+    project(Allocator VERSION 0.0.1)
 endif()
 
 add_executable(allocator Main.cpp)
