@@ -65,7 +65,7 @@ struct CustomAllocator
     {
         std::cout << "Construct" << std::endl;
         new(p) U(std::forward<Args>(args)...);
-    };
+    }
 
     void destroy(pointer p) 
     {
