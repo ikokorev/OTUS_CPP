@@ -45,6 +45,7 @@ struct CustomAllocator
         {
             std::cout << "Correct allocation with offset - " << Offset << std::endl;
             auto MemoryPtrForNextObject = reinterpret_cast<pointer>(MemoryStartPtr) + Offset++ * n;
+            
             std::cout << MemoryPtrForNextObject << std::endl;
             return MemoryPtrForNextObject;
         }
