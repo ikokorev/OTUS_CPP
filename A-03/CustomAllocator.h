@@ -44,7 +44,9 @@ struct CustomAllocator
         if (Offset < Size)
         {
             std::cout << "Correct allocation with offset - " << Offset << std::endl;
-            return reinterpret_cast<pointer>(MemoryStartPtr) + sizeof(value_type) * Offset++ * n;
+            auto MemoryPtrForNextObject = reinterpret_cast<pointer>(MemoryStartPtr) + Offset++ * n;
+            std::cout << MemoryPtrForNextObject << std::endl;
+            return MemoryPtrForNextObject;
         }
         else
         {
@@ -56,7 +58,7 @@ struct CustomAllocator
 
     void deallocate(pointer p, std::size_t n) 
     {
-        std::cout << "Deallocating " << n << " element(s)." << std::endl;
+        std::cout << "Deallocating " << n << " element(s). Pointer address - " << p << std::endl;
         std::free(p);
     }
 
