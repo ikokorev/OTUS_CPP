@@ -4,6 +4,7 @@
 #include <list>
 #include <vector>
 
+
 int Factorial(int Number)
 {
     if(Number < 0)
@@ -27,10 +28,11 @@ int main()
     // Full filling of the allocator by its size causes bad allocation exception, e.g to fill allocator with
     // 10 elements I have to use CustomAllocator with size equals to 11. So here I substract 1 from AllocSize,
     // cause its temporarly irrelevant (I have to figure out, how to create a valid allocator with reserve first).
-    for (size_t i = 0; i < AllocSize - 1; ++i) 
+    for (size_t i = 0; i < AllocSize; ++i) 
     {
-        FactorialValues.emplace(i, Factorial(i));
-        std::cout << "\nAdded element to map, its value - " << FactorialValues.at(i) << std::endl;
+        std::cout << "\nAdding element to map.";
+        FactorialValues.insert(std::pair<int, int>(i, Factorial(i)));
+        std::cout << "New element value is - " << FactorialValues.at(i) << std::endl;
     }
 
     for (auto Elem : FactorialValues)

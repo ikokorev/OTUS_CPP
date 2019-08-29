@@ -60,7 +60,11 @@ struct CustomAllocator
     void deallocate(pointer p, std::size_t n) 
     {
         std::cout << "Deallocating " << n << " element(s). Pointer address - " << p << std::endl;
-        std::free(p);
+        --Offset;
+        if (Offset <= 0)
+        {
+            std::free(MemoryStartPtr);
+        }
     }
 
     template<typename U, typename... Args>
