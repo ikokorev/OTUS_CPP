@@ -16,7 +16,7 @@ include_directories(${CMAKE_SOURCE_DIR}/../googletest/include)
 target_link_libraries(allocator PUBLIC gtest gtest_main)
 
 set_target_properties(allocator PROPERTIES
-    CXX_STANDARD 14
+    CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )
 
@@ -28,7 +28,7 @@ if (MSVC)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
     target_compile_options(allocator PRIVATE
-        /W4
+        /WX
     )
 else ()
     target_compile_options(allocator PRIVATE

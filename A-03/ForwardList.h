@@ -1,3 +1,5 @@
+#pragma once
+
 #include <memory>
 
 template<typename Type>
@@ -129,7 +131,7 @@ private:
     ForwardNode<Type>* Head {nullptr};
     ForwardNode<Type>* Tail {nullptr};
    
-    using NodeAllocType = typename AllocType::template rebind<ForwardNode<Type>>::other;
+    using NodeAllocType = typename std::allocator_traits<AllocType>::template rebind_alloc<ForwardNode<Type>>;
     NodeAllocType Allocator;
 
     size_t Size;

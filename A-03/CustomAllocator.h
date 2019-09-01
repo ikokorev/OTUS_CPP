@@ -1,3 +1,5 @@
+#pragma once
+
 #include <memory>
 
 template<typename T, size_t Size>
@@ -41,7 +43,7 @@ struct CustomAllocator
         }
     }
 
-    void deallocate(pointer p, std::size_t n) 
+    void deallocate([[maybe_unused]] pointer p, [[maybe_unused]] std::size_t n) 
     {
         if (--Offset <= 0)
         {
