@@ -1,8 +1,4 @@
 #include <memory>
-#include <iostream>
-#include <type_traits>
-#include <array>
-#include <stack>
 
 template<typename T, size_t Size>
 struct CustomAllocator 
@@ -30,38 +26,24 @@ struct CustomAllocator
 
     pointer allocate(std::size_t n) 
     {
-        std::cout << "\nAllocating " << n << " element(s)." << std::endl;
-
-        if (!IsMemoryReserved)
+        if (MemoryStartPtr == nullptr)
         {
-            std::cout << "Reserving memory for " << Size << " elements. " 
-            << "Value type sizeof is - " << sizeof(value_type) << std::endl;
-            
-            IsMemoryReserved = true;
-            MemoryStartPtr = std::malloc(n * Size * sizeof(value_type));
+            MemoryStartPtr = std::malloc(n * AllocSize * sizeof(value_type));
         }
         
-        if (Offset < Size)
+        if (Offset < AllocSize)
         {
-            std::cout << "Correct allocation with offset - " << Offset << std::endl;
-            auto MemoryPtrForNextObject = reinterpret_cast<pointer>(MemoryStartPtr) + Offset++ * n;
-            
-            std::cout << MemoryPtrForNextObject << std::endl;
-            return MemoryPtrForNextObject;
+            return reinterpret_cast<pointer>(MemoryStartPtr) + Offset++ * n;
         }
         else
         {
-            std::cout << "Bad Allocation, allocator reserved memory for " << Size << " element(s), " 
-            << "you trying to add element No - " << Offset + 1 << std::endl;
             throw std::bad_alloc();            
         }
     }
 
     void deallocate(pointer p, std::size_t n) 
     {
-        std::cout << "Deallocating " << n << " element(s). Pointer address - " << p << std::endl;
-        --Offset;
-        if (Offset <= 0)
+        if (--Offset <= 0)
         {
             std::free(MemoryStartPtr);
         }
@@ -70,20 +52,27 @@ struct CustomAllocator
     template<typename U, typename... Args>
     void construct(U* p, Args&&... args) 
     {
-        std::cout << "Construct" << std::endl;
         new(p) U(std::forward<Args>(args)...);
     }
 
     void destroy(pointer p) 
     {
-        std::cout << "Destroy" << std::endl;
         p->~T();
     }
 
 private:
 
-    void* MemoryStartPtr;
-    bool IsMemoryReserved = false;
+    void* MemoryStartPtr = nullptr;
     size_t Offset = 0;
+    
+    // MSVC STL containers implementations calls allocator allocate method on container construction.
+    // So I have to extend allocator size for that one extra allocation (allocator implementation hardly depends on alloc size).
+    // I'm using internal variable, cause I can't affect template parameter.
+    #ifdef _MSC_VER 
+        size_t AllocSize = Size + 1; 
+    #else
+        size_t AllocSize = Size; 
+    #endif
+
 };
 
