@@ -6,13 +6,16 @@ else()
     project(Allocator VERSION 0.0.1)
 endif()
 
-add_executable(allocator Main.cpp)
-
 # Enable testing and adding gtest to project
 enable_testing()
 add_subdirectory(../googletest googletest)
 include_directories(${CMAKE_SOURCE_DIR}/../googletest/include)
 
+add_executable(allocator Main.cpp)
+add_executable(CustomAllocatorTests CustomAllocatorTests.cpp)
+add_test(CustomAllocatorTests CustomAllocatorTests)
+
+target_link_libraries(CustomAllocatorTests PUBLIC gtest gtest_main)
 target_link_libraries(allocator PUBLIC gtest gtest_main)
 
 set_target_properties(allocator PROPERTIES
@@ -30,8 +33,14 @@ if (MSVC)
     target_compile_options(allocator PRIVATE
         /WX
     )
+    target_compile_options(CustomAllocatorTests PRIVATE
+        /WX
+    )
 else ()
     target_compile_options(allocator PRIVATE
+        -Wall -Wextra -pedantic -Werror
+    )
+    target_compile_options(CustomAllocatorTests PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
 endif()
