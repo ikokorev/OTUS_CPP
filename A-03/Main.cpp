@@ -1,5 +1,3 @@
-#pragma once
-
 #include <iostream>
 #include "CustomAllocator.h"
 #include "ForwardList.h"

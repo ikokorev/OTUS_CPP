@@ -43,7 +43,7 @@ struct CustomAllocator
         }
     }
 
-    void deallocate([[maybe_unused]] pointer p, [[maybe_unused]] std::size_t n) 
+    void deallocate(pointer, std::size_t) 
     {
         if (--Offset <= 0)
         {
