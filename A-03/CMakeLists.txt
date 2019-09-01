@@ -19,7 +19,7 @@ target_link_libraries(CustomAllocatorTests PUBLIC gtest gtest_main)
 target_link_libraries(allocator PUBLIC gtest gtest_main)
 
 set_target_properties(allocator PROPERTIES
-    CXX_STANDARD 17
+    CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
 )
 
