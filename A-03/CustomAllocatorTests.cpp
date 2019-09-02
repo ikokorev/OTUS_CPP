@@ -19,6 +19,21 @@ TEST(CustomAllocatorTests, TestAllocWithForwardList)
     EXPECT_EQ(*List.begin(), 1);
 }
 
+TEST(CustomAllocatorTests, TestAllocExpanding) 
+{
+    ForwardList<int, CustomAllocator<int, 1>> List;
+    for (int Value = 0; Value < 5; ++Value)
+    {
+        List.Push(Value);
+    }
+
+    int Value = 0;
+    for (ForwardIterator<int> Iter = List.begin(); Iter != List.end(); ++Iter)
+    {
+        EXPECT_EQ(*Iter, Value++);
+    }
+}
+
 int main(int argc, char **argv)
 {
     testing::InitGoogleTest(&argc, argv);

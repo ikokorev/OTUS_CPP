@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <cmath>
 
 template<typename T, size_t Size>
 struct CustomAllocator 
@@ -26,28 +27,28 @@ struct CustomAllocator
     {
     }
 
-    pointer allocate(std::size_t n) 
+    pointer allocate(std::size_t ElementsNum) 
     {
-        if (MemoryStartPtr == nullptr)
+        if (!IsMemoryAllocated())
         {
-            MemoryStartPtr = std::malloc(n * AllocSize * sizeof(value_type));
+            AllocateMemory(ElementsNum);
         }
         
-        if (Offset < AllocSize)
+        if (IsMemoryOver())
         {
-            return reinterpret_cast<pointer>(MemoryStartPtr) + Offset++ * n;
+            AllocateAdditionalMemory(ElementsNum);
         }
-        else
-        {
-            throw std::bad_alloc();            
-        }
+        
+        return GetPointerForNextElements(ElementsNum);
     }
 
-    void deallocate(pointer, std::size_t) 
+    void deallocate(pointer, std::size_t ElementsNum) 
     {
-        if (--Offset <= 0)
+        RemoveElements(ElementsNum);
+
+        if (IsMemoryEmpty())
         {
-            std::free(MemoryStartPtr);
+           FreeMemory();
         }
     }
 
@@ -63,6 +64,51 @@ struct CustomAllocator
     }
 
 private:
+
+    bool IsMemoryAllocated() const { return MemoryStartPtr; }
+
+    void AllocateMemory(size_t ElementsNum) 
+    {
+        MemoryStartPtr = std::malloc(ElementsNum * AllocSize * sizeof(value_type));
+    }
+
+    bool IsMemoryOver() const { return Offset >= AllocSize; }
+
+    void AllocateAdditionalMemory(size_t ElementsNum)
+    {
+        const double GoldenRatio = 1.62;
+        // Note that on MSVC AllocSize will expand a little bit faster, cause it has extra 1 added to its size, 
+        // (which will participate in AllocSize multiplication by GoldenRatio), due to STL containers calls allocator's 
+        // allocate on their construction.
+        // @see AllocSize variable definition.
+        AllocSize = static_cast<size_t>(std::round(AllocSize * GoldenRatio));
+        
+        MemoryStartPtr = std::realloc(MemoryStartPtr, ElementsNum * AllocSize * sizeof(value_type));
+        if (!MemoryStartPtr)
+        {
+            throw std::bad_alloc();
+        }
+    }
+
+    void RemoveElements(size_t ElementsNum)
+    {
+        Offset -= ElementsNum;
+    }
+
+    bool IsMemoryEmpty() 
+    {
+        return Offset <= 0;
+    }
+
+    void FreeMemory()
+    {
+        std::free(MemoryStartPtr);
+    }
+
+    pointer GetPointerForNextElements(size_t ElementsNum) 
+    { 
+        return reinterpret_cast<pointer>(MemoryStartPtr) + Offset++ * ElementsNum;
+    }
 
     void* MemoryStartPtr = nullptr;
     size_t Offset = 0;
