@@ -28,7 +28,7 @@ void MapTests()
         DefaultAllocMap.emplace(Index, Factorial(Index));
     }
 
-    std::map<int, int, std::less<int>, CustomAllocator<std::pair<const int, int>, GTen>> CustomAllocMap;
+    std::map<int, int, std::less<int>, CustomAllocator<int, GTen>> CustomAllocMap;
     for (int Index = 0; Index < GTen; ++Index) 
     {
         CustomAllocMap.emplace(Index, Factorial(Index));
