@@ -119,8 +119,8 @@ public:
             ForwardNode<Type>* DeallocPtr = Head;
             Head = Head->Next;
             
-            std::allocator_traits<NodeAllocType>::deallocate(Allocator, DeallocPtr, 1);
             std::allocator_traits<NodeAllocType>::destroy(Allocator, DeallocPtr);
+            std::allocator_traits<NodeAllocType>::deallocate(Allocator, DeallocPtr, 1);
         }
 
         Size = 0;
