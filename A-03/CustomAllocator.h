@@ -13,17 +13,17 @@ struct CustomAllocator
     using reference = T&;
     using const_reference = const T&;
 
-    template<typename U>
+    template<typename RebindedAllocType>
     struct rebind 
     {
-        using other = CustomAllocator<U, Size>;
+        using other = CustomAllocator<RebindedAllocType, Size>;
     };
 
     CustomAllocator() = default;
     ~CustomAllocator() = default;
 
-    template<typename U> 
-    CustomAllocator(const CustomAllocator<U, Size>&) 
+    template<typename NewAllocType> 
+    CustomAllocator(const CustomAllocator<NewAllocType, Size>&) 
     {
     }
 
@@ -52,15 +52,16 @@ struct CustomAllocator
         }
     }
 
-    template<typename U, typename... Args>
-    void construct(U* p, Args&&... args) 
+    template<typename ObjectType, typename... ConstructorArgs>
+    void construct(ObjectType* MemoryPtr, ConstructorArgs&&... args) 
     {
-        new(p) U(std::forward<Args>(args)...);
+        new(MemoryPtr) ObjectType(std::forward<ConstructorArgs>(args)...);
     }
 
-    void destroy(pointer p) 
+    template<typename ObjectType>
+    void destroy(ObjectType* Object) 
     {
-        p->~T();
+        Object->~ObjectType();
     }
 
 private:
