@@ -16,7 +16,6 @@ add_executable(CustomAllocatorTests CustomAllocatorTests.cpp)
 add_test(CustomAllocatorTests CustomAllocatorTests)
 
 target_link_libraries(CustomAllocatorTests PUBLIC gtest gtest_main)
-target_link_libraries(allocator PUBLIC gtest gtest_main)
 
 set_target_properties(allocator CustomAllocatorTests PROPERTIES
     CXX_STANDARD 14
