@@ -48,7 +48,7 @@ TEST(CustomAllocatorTests, TestAllocExpanding)
 
 TEST(CustomAllocatorTests, TestAllocWithMap) 
 {
-    std::map<int, int, std::less<int>, CustomAllocator<int, 5>> Map;
+    std::map<int, int, std::less<int>, CustomAllocator<std::pair<const int, int>, 5>> Map;
 
     for (int Value = 0; Value < 5; ++Value)
     {
@@ -64,7 +64,7 @@ TEST(CustomAllocatorTests, TestAllocWithMap)
 
 TEST(CustomAllocatorTests, TestAllocExpandingWithMap) 
 {
-    std::map<int, int, std::less<int>, CustomAllocator<int, 1>> Map;
+    std::map<int, int, std::less<int>, CustomAllocator<std::pair<const int, int>, 1>> Map;
 
     for (int Value = 0; Value < 5; ++Value)
     {
