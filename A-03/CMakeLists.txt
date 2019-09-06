@@ -9,15 +9,21 @@ endif()
 # Enable testing and adding gtest to project
 enable_testing()
 add_subdirectory(../googletest googletest)
+
 include_directories(${CMAKE_SOURCE_DIR}/../googletest/include)
+include_directories(.)
 
 add_executable(allocator Main.cpp)
-add_executable(CustomAllocatorTests CustomAllocatorTests.cpp)
+add_executable(CustomAllocatorTests CustomAllocator/CustomAllocatorTests.cpp)
+add_executable(ForwardListTests ForwardList/ForwardListTests.cpp)
+
 add_test(CustomAllocatorTests CustomAllocatorTests)
+add_test(ForwardListTests ForwardListTests)
 
 target_link_libraries(CustomAllocatorTests PUBLIC gtest gtest_main)
+target_link_libraries(ForwardListTests PUBLIC gtest gtest_main)
 
-set_target_properties(allocator CustomAllocatorTests PROPERTIES
+set_target_properties(allocator CustomAllocatorTests ForwardListTests PROPERTIES
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
 )
@@ -35,11 +41,17 @@ if (MSVC)
     target_compile_options(CustomAllocatorTests PRIVATE
         /WX
     )
+    target_compile_options(ForwardListTests PRIVATE
+        /WX
+    )
 else ()
     target_compile_options(allocator PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
     target_compile_options(CustomAllocatorTests PRIVATE
+        -Wall -Wextra -pedantic -Werror
+    )
+    target_compile_options(ForwardListTests PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
 endif()

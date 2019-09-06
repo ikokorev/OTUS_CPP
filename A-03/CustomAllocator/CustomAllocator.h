@@ -3,7 +3,7 @@
 #include <memory>
 #include <cmath>
 
-template<typename T, size_t Size>
+template<typename T, size_t Size = 10>
 struct CustomAllocator 
 {
     using value_type = T;
@@ -31,7 +31,7 @@ struct CustomAllocator
     {
         if (!IsMemoryAllocated())
         {
-            AllocateMemory(ElementsNum);
+            AllocateMemory();
         }
         
         if (IsMemoryOver())
@@ -68,9 +68,9 @@ private:
 
     bool IsMemoryAllocated() const { return MemoryStartPtr; }
 
-    void AllocateMemory(size_t ElementsNum) 
+    void AllocateMemory() 
     {
-        MemoryStartPtr = std::malloc(ElementsNum * AllocSize * sizeof(value_type));
+        MemoryStartPtr = std::malloc(AllocSize * sizeof(value_type));
     }
 
     bool IsMemoryOver() const { return Offset >= AllocSize; }
@@ -96,7 +96,7 @@ private:
         Offset -= ElementsNum;
     }
 
-    bool IsMemoryEmpty() 
+    bool IsMemoryEmpty() const
     {
         return Offset <= 0;
     }
@@ -104,6 +104,7 @@ private:
     void FreeMemory()
     {
         std::free(MemoryStartPtr);
+        MemoryStartPtr = nullptr;
     }
 
     pointer GetPointerForNextElements(size_t ElementsNum) 

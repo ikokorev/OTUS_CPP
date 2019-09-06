@@ -1,6 +1,6 @@
 #include <iostream>
-#include "CustomAllocator.h"
-#include "ForwardList.h"
+#include "CustomAllocator/CustomAllocator.h"
+#include "ForwardList/ForwardList.h"
 #include <map>
 
 const int GTen = 10;
@@ -54,10 +54,17 @@ void ForwardListTests()
         CustomAllocList.Push(Index);
     }
 
-    for (auto Element : CustomAllocList)
+    try
     {
-        std::cout << Element << std::endl;
+        for (auto Element : CustomAllocList)
+        {
+            std::cout << Element << std::endl;
+        }
     }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }   
 }
 
 int main()

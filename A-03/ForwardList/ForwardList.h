@@ -1,74 +1,7 @@
 #pragma once
 
+#include "ForwardIterator.h"
 #include <memory>
-
-template<typename Type>
-class ForwardNode
-{
-public:
-
-    ForwardNode() = default;
-    ForwardNode(const Type InValue) : Value{InValue} {}
-
-    const Type Value;
-    ForwardNode<Type>* Next {nullptr};
-};
-
-template<typename Type>
-class ForwardIterator
-{
-
-public:
-    
-    ForwardIterator() = default;
-    ForwardIterator(ForwardNode<Type>* InitNode) : StartNode(InitNode) {}
-
-    ForwardIterator& operator++()
-    {
-        if (StartNode)
-        {
-            StartNode = StartNode->Next;
-        }
-
-        return *this;
-    }
-
-    ForwardIterator& operator++(int)
-    {
-        ForwardIterator Old = *this;
-
-        if (StartNode)
-        {
-            StartNode = StartNode->Next;
-        }
-
-        return Old;
-    }
-
-    Type operator*()
-    {
-        if (StartNode)
-        {
-            return StartNode->Value;
-        }
-        
-        return 0;
-    }
-
-    bool operator==(const ForwardIterator<Type>& rhs) const
-    {
-        return StartNode == rhs.StartNode;
-    }
-
-    bool operator!=(const ForwardIterator<Type>& rhs) const
-    {
-        return StartNode != rhs.StartNode;
-    }
-
-private:
-
-    ForwardNode<Type>* StartNode {nullptr};
-};
 
 template<typename Type, typename AllocType = std::allocator<Type>>
 class ForwardList
@@ -110,6 +43,12 @@ public:
         return ForwardIterator<Type>(Tail->Next);
     }
 
+    /// returns last element of a list
+    ForwardIterator<Type> last() const
+    {
+        return ForwardIterator<Type>(Tail);
+    }
+
     size_t GetSize() const { return Size; }
 
     void Clear()
@@ -134,5 +73,5 @@ private:
     using NodeAllocType = typename std::allocator_traits<AllocType>::template rebind_alloc<ForwardNode<Type>>;
     NodeAllocType Allocator;
 
-    size_t Size;
+    size_t Size = 0;
 };
