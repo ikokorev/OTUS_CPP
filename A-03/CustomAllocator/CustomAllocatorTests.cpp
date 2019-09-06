@@ -47,21 +47,21 @@ TEST(CustomAllocatorTests, TestAllocExpanding)
     EXPECT_EQ(*SecondIntPtr, 20);
 }
 
-// TEST(CustomAllocatorTests, TestAllocWithMap) 
-// {
-//     std::map<int, int, std::less<int>, CustomAllocator<std::pair<const int, int>, 5>> Map;
+TEST(CustomAllocatorTests, TestAllocWithMap) 
+{
+    std::map<int, int, std::less<int>, CustomAllocator<std::pair<const int, int>, 5>> Map;
 
-//     for (int Value = 0; Value < 5; ++Value)
-//     {
-//         Map.emplace(Value, Value);
-//     }
+    for (int Value = 0; Value < 5; ++Value)
+    {
+        Map.emplace(Value, Value);
+    }
 
-//     int Value = 0;
-//     for (auto Pair : Map)
-//     {
-//         EXPECT_EQ(Pair.second, Value++);
-//     }
-// }
+    int Value = 0;
+    for (auto Pair : Map)
+    {
+        EXPECT_EQ(Pair.second, Value++);
+    }
+}
 
 // TEST(CustomAllocatorTests, TestAllocExpandingWithMap) 
 // {
