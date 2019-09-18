@@ -5,7 +5,7 @@
 #include "MemoryBucket.h"
 
 template<typename T, size_t Size = 10>
-struct CustomAllocator 
+struct ReservingAllocator 
 {
     using value_type = T;
 
@@ -17,14 +17,14 @@ struct CustomAllocator
     template<typename RebindedAllocType>
     struct rebind 
     {
-        using other = CustomAllocator<RebindedAllocType, Size>;
+        using other = ReservingAllocator<RebindedAllocType, Size>;
     };
 
-    CustomAllocator() = default;
-    ~CustomAllocator() = default;
+    ReservingAllocator() = default;
+    ~ReservingAllocator() = default;
 
     template<typename NewAllocType> 
-    CustomAllocator(const CustomAllocator<NewAllocType, Size>&) 
+    ReservingAllocator(const ReservingAllocator<NewAllocType, Size>&) 
     {
     }
 

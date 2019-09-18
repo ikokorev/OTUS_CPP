@@ -1,5 +1,5 @@
 #include <iostream>
-#include "CustomAllocator/CustomAllocator.h"
+#include "ReservingAllocator/ReservingAllocator.h"
 #include "ForwardList/ForwardList.h"
 #include <map>
 
@@ -28,7 +28,7 @@ void MapTests()
         DefaultAllocMap.emplace(Index, Factorial(Index));
     }
 
-    std::map<int, int, std::less<int>, CustomAllocator<std::pair<const int, int>, GTen>> CustomAllocMap;
+    std::map<int, int, std::less<int>, ReservingAllocator<std::pair<const int, int>, GTen>> CustomAllocMap;
     for (int Index = 0; Index < GTen; ++Index) 
     {
         CustomAllocMap.emplace(Index, Factorial(Index));
@@ -48,7 +48,7 @@ void ForwardListTests()
         DefaultAllocList.Push(Index);
     }
 
-    ForwardList<int, CustomAllocator<int, GTen>> CustomAllocList;
+    ForwardList<int, ReservingAllocator<int, GTen>> CustomAllocList;
     for (int Index = 0; Index < GTen; ++Index) 
     {
         CustomAllocList.Push(Index);

@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "ForwardList.h"
-#include "CustomAllocator/CustomAllocator.h"
+#include "ReservingAllocator/ReservingAllocator.h"
 
 TEST(ForwardListTests, TestList) 
 {
@@ -22,9 +22,9 @@ TEST(ForwardListTests, TestList)
     EXPECT_EQ(List.GetSize(), 2);
 }
 
-TEST(ForwardListTests, TestListWithCustomAlloc) 
+TEST(ForwardListTests, TestListWithReservingAlloc) 
 {
-    ForwardList<int, CustomAllocator<int>> List;
+    ForwardList<int, ReservingAllocator<int>> List;
     for (int Value = 0; Value < 5; ++Value)
     {
         List.Push(Value);

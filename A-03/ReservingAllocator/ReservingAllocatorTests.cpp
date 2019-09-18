@@ -1,10 +1,10 @@
 #include "gtest/gtest.h"
-#include "CustomAllocator.h"
+#include "ReservingAllocator.h"
 #include "ForwardList/ForwardList.h"
 
-TEST(CustomAllocatorTests, TestAllocByItself) 
+TEST(ReservingAllocatorTests, TestAllocByItself) 
 {
-    CustomAllocator<int, 1> IntAllocator;
+    ReservingAllocator<int, 1> IntAllocator;
     int* IntPtr = IntAllocator.allocate();
     IntAllocator.construct(IntPtr, 15);
 
@@ -20,9 +20,9 @@ TEST(CustomAllocatorTests, TestAllocByItself)
     EXPECT_EQ(*IntPtr, 10);
 }
 
-TEST(CustomAllocatorTests, TestAllocExpanding) 
+TEST(ReservingAllocatorTests, TestAllocExpanding) 
 {
-    CustomAllocator<int, 1> IntAllocator;
+    ReservingAllocator<int, 1> IntAllocator;
     
     int* FirstIntPtr = IntAllocator.allocate();
     IntAllocator.construct(FirstIntPtr, 1);
@@ -48,9 +48,9 @@ TEST(CustomAllocatorTests, TestAllocExpanding)
     EXPECT_EQ(*SecondIntPtr, 20);
 }
 
-TEST(CustomAllocatorTests, TestAllocWithMap) 
+TEST(ReservingAllocatorTests, TestAllocWithMap) 
 {
-    std::map<int, int, std::less<int>, CustomAllocator<std::pair<const int, int>, 5>> Map;
+    std::map<int, int, std::less<int>, ReservingAllocator<std::pair<const int, int>, 5>> Map;
 
     for (int Value = 0; Value < 5; ++Value)
     {
@@ -64,9 +64,9 @@ TEST(CustomAllocatorTests, TestAllocWithMap)
     }
 }
 
-TEST(CustomAllocatorTests, TestAllocExpandingWithMap) 
+TEST(ReservingAllocatorTests, TestAllocExpandingWithMap) 
 {
-    std::map<int, int, std::less<int>, CustomAllocator<std::pair<const int, int>, 1>> Map;
+    std::map<int, int, std::less<int>, ReservingAllocator<std::pair<const int, int>, 1>> Map;
 
     for (int Value = 0; Value < 5; ++Value)
     {

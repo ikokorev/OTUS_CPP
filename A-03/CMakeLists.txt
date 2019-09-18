@@ -14,16 +14,16 @@ include_directories(${CMAKE_SOURCE_DIR}/../googletest/include)
 include_directories(.)
 
 add_executable(allocator Main.cpp)
-add_executable(CustomAllocatorTests CustomAllocator/CustomAllocatorTests.cpp)
+add_executable(ReservingAllocatorTests ReservingAllocator/ReservingAllocatorTests.cpp)
 add_executable(ForwardListTests ForwardList/ForwardListTests.cpp)
 
-add_test(CustomAllocatorTests CustomAllocatorTests)
+add_test(ReservingAllocatorTests ReservingAllocatorTests)
 add_test(ForwardListTests ForwardListTests)
 
-target_link_libraries(CustomAllocatorTests PUBLIC gtest gtest_main)
+target_link_libraries(ReservingAllocatorTests PUBLIC gtest gtest_main)
 target_link_libraries(ForwardListTests PUBLIC gtest gtest_main)
 
-set_target_properties(allocator CustomAllocatorTests ForwardListTests PROPERTIES
+set_target_properties(allocator ReservingAllocatorTests ForwardListTests PROPERTIES
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
 )
@@ -38,7 +38,7 @@ if (MSVC)
     target_compile_options(allocator PRIVATE
         /WX
     )
-    target_compile_options(CustomAllocatorTests PRIVATE
+    target_compile_options(ReservingAllocatorTests PRIVATE
         /WX
     )
     target_compile_options(ForwardListTests PRIVATE
@@ -48,7 +48,7 @@ else ()
     target_compile_options(allocator PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
-    target_compile_options(CustomAllocatorTests PRIVATE
+    target_compile_options(ReservingAllocatorTests PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
     target_compile_options(ForwardListTests PRIVATE
