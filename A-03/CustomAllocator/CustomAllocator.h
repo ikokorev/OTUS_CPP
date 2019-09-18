@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <cmath>
+#include "MemoryBucket.h"
 
 template<typename T, size_t Size = 10>
 struct CustomAllocator 
@@ -27,28 +28,35 @@ struct CustomAllocator
     {
     }
 
-    pointer allocate(std::size_t ElementsNum) 
+    /**
+     * Always returns memory for one element, dispite to the value of argument, it just required by standart.
+     * You don't have to pass it, it has a default value as logic hint (cause argument isn't used in func body anyway).
+     * It is done so, because allocator manages memory reservation via memory buckets internaly by itself, you don't need 
+     * to affect it manually by allocating memory for multiply elements.
+     */
+    pointer allocate(std::size_t = 1) 
     {
-        if (!IsMemoryAllocated())
+        if (!HasValidActiveBucket())
         {
-            AllocateMemory();
+            InitiateActiveBucket();
         }
         
-        if (IsMemoryOver())
+        if (IsOutOfFreeMemory())
         {
-            AllocateAdditionalMemory(ElementsNum);
+            CreateNewBucket();
         }
         
-        return GetPointerForNextElements(ElementsNum);
+        IncreaseAllocatedElemsNum();
+        return GetPointerForNextElement();
     }
 
     void deallocate(pointer, std::size_t ElementsNum) 
     {
         RemoveElements(ElementsNum);
 
-        if (IsMemoryEmpty())
+        if (IsMemoryNoLongerRequired())
         {
-           FreeMemory();
+           FreeAllocatedMemory();
         }
     }
 
@@ -66,62 +74,86 @@ struct CustomAllocator
 
 private:
 
-    bool IsMemoryAllocated() const { return MemoryStartPtr; }
+    bool HasValidActiveBucket() const { return ActiveBucket && ActiveBucket->MemoryStorageStartPtr; }
 
-    void AllocateMemory() 
+    void InitiateActiveBucket() 
     {
-        MemoryStartPtr = std::malloc(AllocSize * sizeof(value_type));
-    }
+        ActiveBucket = new MemoryBucket(std::malloc(AllocSize * sizeof(value_type)));
 
-    bool IsMemoryOver() const { return Offset >= AllocSize; }
-
-    void AllocateAdditionalMemory(size_t ElementsNum)
-    {
-        const double GoldenRatio = 1.62;
-        // Note that on MSVC AllocSize will expand a little bit faster, cause it has extra 1 added to its size, 
-        // (which will participate in AllocSize multiplication by GoldenRatio), due to STL containers calls allocator's 
-        // allocate on their construction.
-        // @see AllocSize variable definition.
-        AllocSize = static_cast<size_t>(std::round(AllocSize * GoldenRatio));
-        
-        MemoryStartPtr = std::realloc(MemoryStartPtr, ElementsNum * AllocSize * sizeof(value_type));
-        if (!MemoryStartPtr)
+        if (ActiveBucket->MemoryStorageStartPtr == nullptr)
         {
             throw std::bad_alloc();
         }
     }
 
+    bool IsOutOfFreeMemory() const 
+    { 
+        return AllocatedElemsNum >= AllocSize; 
+    }
+
+    void CreateNewBucket()
+    {
+        AllocSize += Size;
+
+        MemoryBucket* NewBucket = new MemoryBucket(std::malloc(Size * sizeof(value_type)));
+        
+        if (NewBucket->MemoryStorageStartPtr == nullptr)
+        {
+            throw std::bad_alloc();
+        }
+
+        NewBucket->PreviousBucket = ActiveBucket;
+        ActiveBucket = NewBucket;
+
+        ResetActiveBucketMemoryOffset();
+    }
+
+    void ResetActiveBucketMemoryOffset()
+    {
+        ActiveBucketMemoryOffset = 0;
+    }
+
+    void IncreaseAllocatedElemsNum()
+    {
+        ++AllocatedElemsNum;
+    }
+
+    pointer GetPointerForNextElement() 
+    {
+        return reinterpret_cast<pointer>(ActiveBucket->MemoryStorageStartPtr) + ActiveBucketMemoryOffset++;
+    }
+
     void RemoveElements(size_t ElementsNum)
     {
-        Offset -= ElementsNum;
+        AllocatedElemsNum -= ElementsNum;
     }
 
-    bool IsMemoryEmpty() const
+    bool IsMemoryNoLongerRequired() const
     {
-        return Offset <= 0;
+        return AllocatedElemsNum <= 0;
     }
 
-    void FreeMemory()
+    void FreeAllocatedMemory()
     {
-        std::free(MemoryStartPtr);
-        MemoryStartPtr = nullptr;
+        while (ActiveBucket)
+        {
+            MemoryBucket* PrevBucket = ActiveBucket->PreviousBucket;
+            delete ActiveBucket;
+            ActiveBucket = PrevBucket;
+        }
     }
 
-    pointer GetPointerForNextElements(size_t ElementsNum) 
-    { 
-        return reinterpret_cast<pointer>(MemoryStartPtr) + Offset++ * ElementsNum;
-    }
-
-    void* MemoryStartPtr = nullptr;
-    size_t Offset = 0;
+    MemoryBucket* ActiveBucket {nullptr};
+    size_t AllocatedElemsNum {0};
+    size_t ActiveBucketMemoryOffset {0};
     
     // MSVC STL containers implementations calls allocator allocate method on container construction.
     // So I have to extend allocator size for that one extra allocation (allocator implementation hardly depends on alloc size).
     // I'm using internal variable, cause I can't affect template parameter.
     #ifdef _MSC_VER 
-        size_t AllocSize = Size + 1; 
+        size_t AllocSize {Size + 1}; 
     #else
-        size_t AllocSize = Size; 
+        size_t AllocSize {Size}; 
     #endif
 
 };
