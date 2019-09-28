@@ -1,6 +1,12 @@
 language: cpp
 git:
   submodules: false
+
+install:
+# C++17
+- sudo apt-get install -qq g++-7
+- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
+
 before_script:
 - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
 - git submodule update --init --recursive
