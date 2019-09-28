@@ -2,6 +2,11 @@ language: cpp
 git:
   submodules: false
 
+before_install:
+# Get and update repo to get C++17 packages
+  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update -qq
+
 install:
 # C++17
 - sudo apt-get install -qq g++-7
