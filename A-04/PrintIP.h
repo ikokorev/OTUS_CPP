@@ -1,10 +1,18 @@
+/**
+ * @file
+ * @brief Testing doxygen documentation generation.
+ */
+
 #include <type_traits>
 #include <vector>
 #include <iostream>
 #include <tuple>
 #include <stack>
 
-// integral
+/**
+ * @brief SomeText
+ * @return void
+ */
 template<typename T>
 typename std::enable_if<std::is_integral_v<T>>::type PrintIP(const T& IP)
 {
