@@ -24,10 +24,12 @@ int main()
     PrintIP(IPAsList);
 
     std::tuple<int, int, int, int> IPAsTuple {196, 20, 34, 77};
-    PrintIP(IPAsTuple);
+    // Temporary disabled to validly build this program on GCC
+    //PrintIP(IPAsTuple);
 
     std::tuple<long, long> IPAsAnotherTuple {255, 0};
-    PrintIP(IPAsAnotherTuple);
+    // Temporary disabled to validly build this program on GCC
+    //PrintIP(IPAsAnotherTuple); 
 
     return 0;
 }
