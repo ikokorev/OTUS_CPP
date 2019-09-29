@@ -23,7 +23,9 @@ before_script:
 - sudo apt-get update -qq
 - cd A-04
 script:
-- cmake .
+- mkdir build
+- cd build
+- cmake ../.
 - cmake --build .
 - cmake --build . --target test
 - cmake --build . --target package
