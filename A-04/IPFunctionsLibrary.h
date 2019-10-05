@@ -63,10 +63,14 @@ constexpr bool AreHomogeneousTypes()
 }
 
 template<typename T, typename T2, typename... Args>
-constexpr typename std::enable_if<std::is_same_v<T, T2>, bool>::type 
-AreHomogeneousTypes()
+constexpr bool AreHomogeneousTypes()
 {
-    return AreHomogeneousTypes<T2, Args...>();
+    if (std::is_same_v<T, T2>)
+    {
+        return AreHomogeneousTypes<T2, Args...>();
+    }
+    
+    return false;
 }
 
 template <std::size_t ElementIndex = 0, typename... Args>
