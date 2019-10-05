@@ -28,12 +28,10 @@ int main()
     PrintIP(IPAsList);
 
     std::tuple<int, int, int, int> IPAsTuple {196, 20, 34, 77};
-    // Temporary disabled to validly build this program on GCC
-    //ConvertIPToString(IPAsTuple);
+    ConvertIPToString(IPAsTuple);
 
     std::tuple<long, long> IPAsAnotherTuple {255, 0};
-    // Temporary disabled to validly build this program on GCC
-    //ConvertIPToString(IPAsAnotherTuple); 
+    ConvertIPToString(IPAsAnotherTuple); 
 
     return 0;
 }

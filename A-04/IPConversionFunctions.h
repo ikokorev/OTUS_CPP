@@ -62,11 +62,10 @@ constexpr bool are_homogeneous_types()
     return true;
 }
 
-// tuple
-template<typename... Args>
-typename std::enable_if<are_homogeneous_types<Args...>()>::type ConvertIPToString(const std::tuple<Args...>& Tuple) 
+template <std::size_t ElementIndex = 0, typename... Args>
+typename std::enable_if_t<ElementIndex == (std::tuple_size_v<std::tuple<Args...>> - 1)> PrintTuple(const std::tuple<Args...>& Tuple)
 {
-    PrintTuple(Tuple);
+    std::cout << std::get<ElementIndex>(Tuple) << std::endl;
 }
 
 template <std::size_t ElementIndex = 0, typename... Args>
@@ -76,8 +75,10 @@ typename std::enable_if_t<ElementIndex < (std::tuple_size_v<std::tuple<Args...>>
     PrintTuple<ElementIndex + 1, Args...>(Tuple);
 }
 
-template <std::size_t ElementIndex = 0, typename... Args>
-typename std::enable_if_t<ElementIndex == std::tuple_size_v<std::tuple<Args...>> - 1> PrintTuple(const std::tuple<Args...>& Tuple)
+// tuple
+template<std::size_t ElementIndex = 0, typename... Args>
+void ConvertIPToString(const std::tuple<Args...>& Tuple) 
 {
-    std::cout << std::get<ElementIndex>(Tuple) << std::endl;
+    PrintTuple(Tuple);
 }
+
