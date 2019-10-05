@@ -50,16 +50,16 @@ typename std::enable_if<std::is_same_v<T, std::string>, std::string>::type Conve
     return IP;
 }
 
-template<typename T, typename T2, typename... Args>
-constexpr typename std::enable_if<std::is_same_v<T, T2>, bool>::type are_homogeneous_types()
-{
-    return are_homogeneous_types<T2, Args...>();
-}
-
 template<typename T>
 constexpr bool are_homogeneous_types()
 {
     return true;
+}
+
+template<typename T, typename T2, typename... Args>
+constexpr typename std::enable_if<std::is_same_v<T, T2>, bool>::type are_homogeneous_types()
+{
+    return are_homogeneous_types<T2, Args...>();
 }
 
 template <std::size_t ElementIndex = 0, typename... Args>
@@ -77,7 +77,7 @@ typename std::enable_if_t<ElementIndex < (std::tuple_size_v<std::tuple<Args...>>
 
 // tuple
 template<std::size_t ElementIndex = 0, typename... Args>
-void ConvertIPToString(const std::tuple<Args...>& Tuple) 
+typename std::enable_if<are_homogeneous_types<Args...>()>::type ConvertIPToString(const std::tuple<Args...>& Tuple) 
 {
     PrintTuple(Tuple);
 }
