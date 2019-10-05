@@ -1,8 +1,12 @@
-#include <iostream>
-#include "PrintIP.h"
-#include <string>
-#include <tuple>
+#include "IPConversionFunctions.h"
+#include <vector>
 #include <list>
+
+template<typename T>
+void PrintIP(const T& IP)
+{
+    std::cout << ConvertIPToString(IP) << std::endl;
+}
 
 int main()
 {
@@ -25,11 +29,11 @@ int main()
 
     std::tuple<int, int, int, int> IPAsTuple {196, 20, 34, 77};
     // Temporary disabled to validly build this program on GCC
-    //PrintIP(IPAsTuple);
+    //ConvertIPToString(IPAsTuple);
 
     std::tuple<long, long> IPAsAnotherTuple {255, 0};
     // Temporary disabled to validly build this program on GCC
-    //PrintIP(IPAsAnotherTuple); 
+    //ConvertIPToString(IPAsAnotherTuple); 
 
     return 0;
 }

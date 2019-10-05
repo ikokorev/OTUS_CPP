@@ -39,7 +39,7 @@ TEST(ForwardListTests, TestListWithReservingAlloc)
             EXPECT_EQ(*Iter, Value++);
         }
 
-        // Testing that list works with range-based foor loop
+        // Testing that list works with range-based for loop
         Value = 0;
         for (auto Elem : List)
         {

@@ -4,44 +4,50 @@
  */
 
 #include <type_traits>
-#include <vector>
 #include <iostream>
 #include <tuple>
-#include <stack>
+#include <string>
 
 /**
  * @brief SomeText
  * @return void
  */
 template<typename T>
-typename std::enable_if<std::is_integral_v<T>>::type PrintIP(const T& IP)
+typename std::enable_if<std::is_integral_v<T>, std::string>::type ConvertIPToString(const T& IP)
 {
-    for (int i = sizeof(IP) - 1; i > 0; --i)
+    std::string Result;
+
+    for (int ByteNum = sizeof(IP) - 1; ByteNum > 0; --ByteNum)
     {
-        std::cout << (( IP >> ((i)*8) ) & 0xFF) << ".";
+        Result += std::to_string((( IP >> (ByteNum * 8)) & 0xFF));
+        Result += ('.');
     }
 
-    std::cout << (IP & 0xFF) << std::endl;
+    Result += std::to_string(IP & 0xFF);
+    return Result;
 }
 
 // container 
-// explain dummy template arg and !equation
-template<typename ContainerType, typename = typename ContainerType::value_type>
-typename std::enable_if<!std::is_same_v<ContainerType, std::string>, void>::type PrintIP(const ContainerType& IP)
+template<typename ContainerType, typename = typename ContainerType::value_type> // @todo: maybe detect container another way?
+typename std::enable_if<!std::is_same_v<ContainerType, std::string>, std::string>::type ConvertIPToString(const ContainerType& IP)
 {
-    for (auto iter = IP.cbegin(), last = --IP.end(); iter != last; ++iter)
+    std::string Result;
+
+    for (auto Iter = IP.cbegin(), Last = --IP.cend(); Iter != Last; ++Iter)
     {
-        std::cout << *iter << "..";
+        Result += std::to_string(*Iter);
+        Result += "..";
     }
     
-    std::cout << *--IP.end() << std::endl;
+    Result += std::to_string(*--IP.cend());
+    return Result;
 }
 
 // string
 template<typename T>
-typename std::enable_if<std::is_same_v<T, std::string>>::type PrintIP(const T& IP)
+typename std::enable_if<std::is_same_v<T, std::string>, std::string>::type ConvertIPToString(const T& IP)
 {
-    std::cout << IP << std::endl;
+    return IP;
 }
 
 template<typename T, typename T2, typename... Args>
@@ -58,7 +64,7 @@ constexpr bool are_homogeneous_types()
 
 // tuple
 template<typename... Args>
-typename std::enable_if<are_homogeneous_types<Args...>()>::type PrintIP(const std::tuple<Args...>& Tuple) 
+typename std::enable_if<are_homogeneous_types<Args...>()>::type ConvertIPToString(const std::tuple<Args...>& Tuple) 
 {
     PrintTuple(Tuple);
 }
