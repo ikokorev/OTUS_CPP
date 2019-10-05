@@ -2,16 +2,17 @@
 #include "IPFunctionsLibrary.h"
 #include <array>
 #include <deque>
+#include <list>
 
 TEST(TestIPToStringConversion, TestIPAsIntegral) 
 {
     EXPECT_EQ(ConvertIPToString(char(27)), std::string("27"));
-    EXPECT_EQ(ConvertIPToString(unsigned char(163)), std::string("163"));
+    EXPECT_EQ(ConvertIPToString((unsigned char(163))), std::string("163"));
     EXPECT_EQ(ConvertIPToString(short(0)), std::string("0.0"));
     EXPECT_EQ(ConvertIPToString(short(267)), std::string("1.11"));
-    EXPECT_EQ(ConvertIPToString(unsigned int(882917366)), std::string("52.160.63.246"));
+    EXPECT_EQ(ConvertIPToString((unsigned int(882917366))), std::string("52.160.63.246"));
     EXPECT_EQ(ConvertIPToString(int(1765834732)), std::string("105.64.127.236"));
-    EXPECT_EQ(ConvertIPToString(long long (2130706433)), std::string("0.0.0.0.127.0.0.1"));
+    EXPECT_EQ(ConvertIPToString((long long (2130706433))), std::string("0.0.0.0.127.0.0.1"));
     EXPECT_EQ(ConvertIPToString(1237859348273829484), std::string("17.45.194.132.207.194.22.108"));
 }
 
