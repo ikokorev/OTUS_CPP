@@ -35,9 +35,9 @@ typename std::enable_if<!std::is_same_v<ContainerType, std::string>, std::string
 ConvertIPToString(const ContainerType& IP)
 {
     std::string Result;
-    auto LastElement = --IP.cend();
+    auto LastElement = --IP.end();
 
-    for (auto Iter = IP.cbegin(); Iter != LastElement; ++Iter)
+    for (auto Iter = IP.begin(); Iter != LastElement; ++Iter)
     {
         Result += std::to_string(*Iter);
         Result += "..";
