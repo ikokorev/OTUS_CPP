@@ -124,12 +124,12 @@ Functions</h2></td></tr>
 <tr class="memitem:aadb68f41858306d416e62af071e3f9bb"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aadb68f41858306d416e62af071e3f9bb"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; std::is_same_v&lt; T, std::string &gt;, std::string &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_i_p_conversion_functions_8h.html#aadb68f41858306d416e62af071e3f9bb">ConvertIPToString</a> (const T &amp;IP)</td></tr>
 <tr class="separator:aadb68f41858306d416e62af071e3f9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92e983c574e3698dc33ff3bb56500709"><td class="memTemplParams" colspan="2">template&lt;typename T , typename T2 , typename... Args&gt; </td></tr>
-<tr class="memitem:a92e983c574e3698dc33ff3bb56500709"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::enable_if&lt; std::is_same_v&lt; T, T2 &gt;, bool &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_i_p_conversion_functions_8h.html#a92e983c574e3698dc33ff3bb56500709">are_homogeneous_types</a> ()</td></tr>
-<tr class="separator:a92e983c574e3698dc33ff3bb56500709"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b235db4f04098141dd8e681caa8e62f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a4b235db4f04098141dd8e681caa8e62f"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_i_p_conversion_functions_8h.html#a4b235db4f04098141dd8e681caa8e62f">are_homogeneous_types</a> ()</td></tr>
 <tr class="separator:a4b235db4f04098141dd8e681caa8e62f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92e983c574e3698dc33ff3bb56500709"><td class="memTemplParams" colspan="2">template&lt;typename T , typename T2 , typename... Args&gt; </td></tr>
+<tr class="memitem:a92e983c574e3698dc33ff3bb56500709"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::enable_if&lt; std::is_same_v&lt; T, T2 &gt;, bool &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_i_p_conversion_functions_8h.html#a92e983c574e3698dc33ff3bb56500709">are_homogeneous_types</a> ()</td></tr>
+<tr class="separator:a92e983c574e3698dc33ff3bb56500709"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a687a1b4bae8f4e8a5119b89799cdb438"><td class="memTemplParams" colspan="2">template&lt;std::size_t ElementIndex = 0, typename... Args&gt; </td></tr>
 <tr class="memitem:a687a1b4bae8f4e8a5119b89799cdb438"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; ElementIndex==(std::tuple_size_v&lt; std::tuple&lt; Args... &gt;&gt;-1)&gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_i_p_conversion_functions_8h.html#a687a1b4bae8f4e8a5119b89799cdb438">PrintTuple</a> (const std::tuple&lt; Args... &gt; &amp;Tuple)</td></tr>
 <tr class="separator:a687a1b4bae8f4e8a5119b89799cdb438"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,14 +137,14 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Testing doxygen documentation generation. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a92e983c574e3698dc33ff3bb56500709"></a>
+<a class="anchor" id="a4b235db4f04098141dd8e681caa8e62f"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename T2 , typename... Args&gt; </div>
+template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">constexpr std::enable_if&lt;std::is_same_v&lt;T, T2&gt;, bool&gt;::type are_homogeneous_types </td>
+          <td class="memname">constexpr bool are_homogeneous_types </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -154,14 +154,14 @@ template&lt;typename T , typename T2 , typename... Args&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a4b235db4f04098141dd8e681caa8e62f"></a>
+<a class="anchor" id="a92e983c574e3698dc33ff3bb56500709"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename T , typename T2 , typename... Args&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool are_homogeneous_types </td>
+          <td class="memname">constexpr std::enable_if&lt;std::is_same_v&lt;T, T2&gt;, bool&gt;::type are_homogeneous_types </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
