@@ -22,11 +22,14 @@ int main()
     std::list<short> IPAsList {216, 76, 61, 73};
     PrintIP(IPAsList);
 
-    std::tuple<int, int, int, int> IPAsTuple {196, 20, 34, 77};
-    PrintIP(IPAsTuple);
+    std::tuple<unsigned long> FirstTuple {127};
+    PrintIP(FirstTuple);
 
-    std::tuple<long, long> IPAsAnotherTuple {255, 0};
-    PrintIP(IPAsAnotherTuple);
+    std::tuple<long, long> SecondTuple {255, 0};
+    PrintIP(SecondTuple);
+
+    std::tuple<int, int, int, int> ThirdTuple {196, 20, 34, 77};
+    PrintIP(ThirdTuple);
 
     return 0;
 }

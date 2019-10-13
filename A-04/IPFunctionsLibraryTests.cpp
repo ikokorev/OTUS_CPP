@@ -53,8 +53,8 @@ TEST(TestTypesForHomogeneity, )
     EXPECT_EQ((AreHomogeneousTypes<int, unsigned int>()), false);
     EXPECT_EQ((AreHomogeneousTypes<float, float, float>()), true);
     EXPECT_EQ((AreHomogeneousTypes<float, double>()), false);
-    EXPECT_EQ((AreHomogeneousTypes<int, int, int, long>()), false);
-    EXPECT_EQ((AreHomogeneousTypes<long, long, long, long, long, long, long, long, long>()), true);
+    EXPECT_EQ((AreHomogeneousTypes<int, long>()), false);
+    EXPECT_EQ((AreHomogeneousTypes<long, long, long, long, long, long, long>()), true);
     EXPECT_EQ((AreHomogeneousTypes<char, const char>()), false);
     EXPECT_EQ((AreHomogeneousTypes<std::vector<float>, std::list<float>>()), false);
     EXPECT_EQ((AreHomogeneousTypes<std::vector<long>, std::vector<long>>()), true);
