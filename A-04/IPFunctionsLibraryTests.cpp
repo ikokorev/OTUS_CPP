@@ -35,17 +35,6 @@ TEST(TestIPToStringConversion, TestIPAsString)
     EXPECT_EQ(ConvertIPToString(IP), std::string("127.0.0.1"));
 }
 
-TEST(TestIPToStringConversion, TestIPAsTuple) 
-{
-    std::tuple<unsigned int, unsigned int> IPAsTupleOfUnsignedInts {255, 0};
-    std::tuple<int, int, int, int> IPAsTupleOfInts {10, 50, 0, 29};
-    std::tuple<long, long, long, long, long, long, long, long> IPAsTupleOfLongs {15, 0, 62, 245, 54, 28, 18, 23};
-
-    EXPECT_EQ(ConvertIPToString(IPAsTupleOfUnsignedInts), std::string("255..0"));
-    EXPECT_EQ(ConvertIPToString(IPAsTupleOfInts), std::string("10..50..0..29"));
-    EXPECT_EQ(ConvertIPToString(IPAsTupleOfLongs), std::string("15..0..62..245..54..28..18..23"));
-}
-
 TEST(TestTypesForHomogeneity, ) 
 { 
     EXPECT_EQ(AreHomogeneousTypes<int>(), true);
@@ -58,6 +47,19 @@ TEST(TestTypesForHomogeneity, )
     EXPECT_EQ((AreHomogeneousTypes<char, const char>()), false);
     EXPECT_EQ((AreHomogeneousTypes<std::vector<float>, std::list<float>>()), false);
     EXPECT_EQ((AreHomogeneousTypes<std::vector<long>, std::vector<long>>()), true);
+}
+
+TEST(TestIPToStringConversion, TestIPAsTuple) 
+{
+    std::tuple<int> FirstTuple {255};
+    std::tuple<unsigned int, unsigned int> SecondTuple {255, 0};
+    std::tuple<int, int, int, int> ThirdTuple {10, 50, 0, 29};
+    std::tuple<long, long, long, long, long, long, long, long> FourthTuple {15, 0, 62, 245, 54, 28, 18, 23};
+
+    EXPECT_EQ(ConvertIPToString(FirstTuple), std::string("255"));
+    EXPECT_EQ(ConvertIPToString(SecondTuple), std::string("255..0"));
+    EXPECT_EQ(ConvertIPToString(ThirdTuple), std::string("10..50..0..29"));
+    EXPECT_EQ(ConvertIPToString(FourthTuple), std::string("15..0..62..245..54..28..18..23"));
 }
 
 int main(int argc, char **argv)
