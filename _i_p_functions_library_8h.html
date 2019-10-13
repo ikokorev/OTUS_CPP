@@ -87,7 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Testing doxygen documentation generation.  
+<p>Function library to work with IP addresses. Implemented via templates to practice metaprogramming.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;type_traits&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
@@ -116,26 +116,31 @@ This graph shows which files directly or indirectly include this file:</div>
 Functions</h2></td></tr>
 <tr class="memitem:a54651d5f9a414256cc91193d41230e65"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a54651d5f9a414256cc91193d41230e65"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; std::is_integral_v&lt; T &gt;, std::string &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_i_p_functions_library_8h.html#a54651d5f9a414256cc91193d41230e65">ConvertIPToString</a> (const T &amp;IP)</td></tr>
-<tr class="memdesc:a54651d5f9a414256cc91193d41230e65"><td class="mdescLeft">&#160;</td><td class="mdescRight">SomeText.  <a href="#a54651d5f9a414256cc91193d41230e65">More...</a><br /></td></tr>
+<tr class="memdesc:a54651d5f9a414256cc91193d41230e65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts IP address represented as an arbitrary integer type to corresponding string.  <a href="#a54651d5f9a414256cc91193d41230e65">More...</a><br /></td></tr>
 <tr class="separator:a54651d5f9a414256cc91193d41230e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3f5fe149350e8d1a46ae759ddfc8e19"><td class="memTemplParams" colspan="2">template&lt;typename ContainerType , typename  = typename ContainerType::value_type&gt; </td></tr>
 <tr class="memitem:af3f5fe149350e8d1a46ae759ddfc8e19"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt;!std::is_same_v&lt; ContainerType, std::string &gt;, std::string &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_i_p_functions_library_8h.html#af3f5fe149350e8d1a46ae759ddfc8e19">ConvertIPToString</a> (const ContainerType &amp;IP)</td></tr>
+<tr class="memdesc:af3f5fe149350e8d1a46ae759ddfc8e19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts IP address represented as container to string. std::string isn't supported - it has it's own conversion func specialization.  <a href="#af3f5fe149350e8d1a46ae759ddfc8e19">More...</a><br /></td></tr>
 <tr class="separator:af3f5fe149350e8d1a46ae759ddfc8e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadb68f41858306d416e62af071e3f9bb"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aadb68f41858306d416e62af071e3f9bb"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; std::is_same_v&lt; T, std::string &gt;, std::string &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_i_p_functions_library_8h.html#aadb68f41858306d416e62af071e3f9bb">ConvertIPToString</a> (const T &amp;IP)</td></tr>
+<tr class="memdesc:aadb68f41858306d416e62af071e3f9bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">"Converts" IP address represented as string, to a string.  <a href="#aadb68f41858306d416e62af071e3f9bb">More...</a><br /></td></tr>
 <tr class="separator:aadb68f41858306d416e62af071e3f9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2dbf0c80be1c4eb929688696031d31fa"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a2dbf0c80be1c4eb929688696031d31fa"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_i_p_functions_library_8h.html#a2dbf0c80be1c4eb929688696031d31fa">AreHomogeneousTypes</a> ()</td></tr>
+<tr class="memdesc:a2dbf0c80be1c4eb929688696031d31fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">One type is considered to be homogeneous to himself, which is logical.  <a href="#a2dbf0c80be1c4eb929688696031d31fa">More...</a><br /></td></tr>
 <tr class="separator:a2dbf0c80be1c4eb929688696031d31fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0c2eefb691578f62723a62177553ee1"><td class="memTemplParams" colspan="2">template&lt;typename T , typename T2 , typename... Args&gt; </td></tr>
 <tr class="memitem:af0c2eefb691578f62723a62177553ee1"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_i_p_functions_library_8h.html#af0c2eefb691578f62723a62177553ee1">AreHomogeneousTypes</a> ()</td></tr>
+<tr class="memdesc:af0c2eefb691578f62723a62177553ee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validates any number of types to be homogeneous, at compile time.  <a href="#af0c2eefb691578f62723a62177553ee1">More...</a><br /></td></tr>
 <tr class="separator:af0c2eefb691578f62723a62177553ee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a83621a05949db2823af3fa3e412b06"><td class="memTemplParams" colspan="2">template&lt;std::size_t ElementIndex = 0, typename... Args&gt; </td></tr>
 <tr class="memitem:a2a83621a05949db2823af3fa3e412b06"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; ElementIndex==(std::tuple_size_v&lt; std::tuple&lt; Args... &gt;&gt;-1)&gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_i_p_functions_library_8h.html#a2a83621a05949db2823af3fa3e412b06">ConvertTupleToString</a> (const std::tuple&lt; Args... &gt; &amp;Tuple, std::string &amp;OutResult)</td></tr>
 <tr class="separator:a2a83621a05949db2823af3fa3e412b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Testing doxygen documentation generation. </p>
+<div class="textblock"><p>Function library to work with IP addresses. Implemented via templates to practice metaprogramming. </p>
+<p>The library currently contains conversion functions of different IP representations to string, and printing function of the result of such conversion. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a2dbf0c80be1c4eb929688696031d31fa"></a>
 <div class="memitem">
@@ -151,6 +156,8 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>One type is considered to be homogeneous to himself, which is logical. </p>
 
 </div>
 </div>
@@ -168,6 +175,9 @@ template&lt;typename T , typename T2 , typename... Args&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Validates any number of types to be homogeneous, at compile time. </p>
+<dl class="section return"><dt>Returns</dt><dd>Returns corresponding bool value, if types are homogeneous or not. </dd></dl>
 
 </div>
 </div>
@@ -187,8 +197,20 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>SomeText. </p>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+<p>Converts IP address represented as an arbitrary integer type to corresponding string. </p>
+<p>IP bytes are added to result string starting with the most significant byte of given integer, with "." as separator. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Arbitrary integer type, representing IP address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">IP</td><td>An integer representation of IP address to convert. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of conversion as std::string. </dd></dl>
 
 </div>
 </div>
@@ -208,6 +230,21 @@ template&lt;typename ContainerType , typename  = typename ContainerType::value_t
       </table>
 </div><div class="memdoc">
 
+<p>Converts IP address represented as container to string. std::string isn't supported - it has it's own conversion func specialization. </p>
+<p>IP bytes are added to result string from container elements, starting from the beginning to the end, with ".." as separator. Container elements type should be supported by std::to_string conversion. Use default supported types or define std::to_string specialization for your custom type. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">ContainerType</td><td>Container type, representing IP address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">IP</td><td>Container of IP address bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of conversion as std::string. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="aadb68f41858306d416e62af071e3f9bb"></a>
@@ -225,6 +262,21 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>"Converts" IP address represented as string, to a string. </p>
+<p>That's a dummy "conversion", to practice metaprogramming. The case is that std::string can be managed as container, and I should segregate std::string from other containers, for my IP conversion method. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Dummy type, which validates to be std::string, to take advantage of SFINAE. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">IP</td><td>std::string, representing IP address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Simply returns given IP. </dd></dl>
 
 </div>
 </div>
