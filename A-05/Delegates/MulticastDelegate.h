@@ -48,12 +48,7 @@ public:
 	{
 		BindedFunctions.push_back(Function);
 	}
-
-	// void RemoveFunction(std::function<void(Args ...)> Function) should I implement it via Set?
-	// {
-
-	// }
-
+	
 	void Clear()
 	{
 		BindedFunctions.clear();

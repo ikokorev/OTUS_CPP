@@ -24,7 +24,7 @@ public:
 private:
 
     UDocumentController DocumentController;
-    UFigureDrawController FiguresDrawController;  
+    UFigureDrawController FigureDrawController;  
     UEraseController EraseController;
     UEditorStateController EditorStateController;
     UMediatorController MediatorController;  

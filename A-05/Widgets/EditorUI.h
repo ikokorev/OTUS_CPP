@@ -13,6 +13,8 @@ class UEditorUI : public UCanvas
 {
 
 public:
+    void Init(bool bShouldShowCreateProjectDialog = false);
+    
     // All UI elements here please
     UDrawingField DrawingField;
     UDocumentsPanel DocumentsPanel;

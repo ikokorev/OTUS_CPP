@@ -2,6 +2,7 @@
 
 #include "Interfaces/Controller.h"
 #include "Widgets/Documents/DocumentsPanel.h"
+#include <string>
 
 /**
  * @brief A controller for work with documents.

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "PanelWidget.h"
-#include "MulticastDelegate.h"
+#include "Delegates/MulticastDelegate.h"
 
 /**
  * @brief General class for all widgets\
