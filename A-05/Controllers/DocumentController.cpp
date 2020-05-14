@@ -1,5 +1,5 @@
 #include "DocumentController.h"
-#include "MulticastDelegate.h"
+#include "Delegates/MulticastDelegate.h"
 #include <iostream>
 
 void UDocumentController::BindToDocPanelEvents(UDocumentsPanel& DocumentsPanel)
@@ -12,7 +12,7 @@ void UDocumentController::CreateDocument()
 {
     std::cout << "UDocumentController::CreateDocument()" << std::endl;
 }
-
+ 
 void UDocumentController::ImportDocument()
 {
     std::cout << "UDocumentController::ImportDocument()" << std::endl;
