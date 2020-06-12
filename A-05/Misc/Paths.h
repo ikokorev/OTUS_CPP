@@ -12,10 +12,10 @@ class FPaths
 {
 public:
     /* Returns the path to the currently loaded project file. */
-    static std::string GetProjectFilePath();
+	static std::string GetProjectFilePath() { return std::string(); };
 
     /* Sets the path to the project file. */
-    static void SetProjectFilePath(const std::string& NewProjectFilePath);
+    static void SetProjectFilePath(const std::string& NewProjectFilePath) {};
 
 private:
     /** Holds the path to the currently loaded project file. */

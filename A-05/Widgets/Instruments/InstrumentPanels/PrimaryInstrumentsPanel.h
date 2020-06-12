@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Widgets/BaseClasses/GridPanel.h"
+#include "Widgets/Framework/GridPanel.h"
 
 /**
  * @brief A panel of all core instruments.

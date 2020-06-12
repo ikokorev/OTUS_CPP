@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Interfaces/Controller.h"
-#include "DocumentController.h"
+#include "ProjectActionsController.h"
 #include "EraseController.h"
 #include "FigureDrawController.h"
 #include "MediatorController.h"
@@ -23,7 +23,7 @@ public:
 
 private:
 
-    UDocumentController DocumentController;
+    UProjectActionsController ProjectActionsController;
     UFigureDrawController FigureDrawController;  
     UEraseController EraseController;
     UEditorStateController EditorStateController;

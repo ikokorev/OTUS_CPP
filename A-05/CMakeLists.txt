@@ -9,15 +9,23 @@ endif()
 # Enable testing and adding gtest to project
 enable_testing()
 add_subdirectory(../googletest googletest)
+include_directories(${CMAKE_SOURCE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/../googletest/include)
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 set(
     ImplementationFiles 
     "Main.cpp" 
+	"Launch.cpp" 
     "Controllers/ControllersManager.cpp" 
-    "Controllers/DocumentController.cpp"
+    "Controllers/ProjectActionsController.cpp"
     "Editor/Editor.cpp"
+	"Editor/EditorLoop.cpp"
+	"Widgets/EditorUI.cpp"
+	"Widgets/Framework/Button.cpp"
+	"Widgets/Project/ProjectActionsPanel.cpp"
+	"Projects/ProjectManager.cpp"
+	"Misc/CommandLine.cpp"
 )
 add_executable(GraphicsEditor ${ImplementationFiles}) 
 

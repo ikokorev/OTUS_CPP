@@ -1,5 +1,5 @@
 #include "EditorUI.h"
-#include "EditorProjectGeneration/Widgets/CreateProjectDialog.h"
+#include "Project/ProjectDialog.h"
 
 void UEditorUI::Init(bool bShouldShowCreateProjectDialog /* = false */)
 {
@@ -7,7 +7,7 @@ void UEditorUI::Init(bool bShouldShowCreateProjectDialog /* = false */)
     if (bShouldShowCreateProjectDialog)
     {
         // Let's assume we're creating new project via special dialog window here
-        UCreateProjectDialog* CreateProjectDialog = new UCreateProjectDialog();
+        UProjectDialog* CreateProjectDialog = new UProjectDialog();
     }
     // ...
 }

@@ -14,3 +14,4 @@ public:
 private:
     static std::string CmdLine;
 };
+

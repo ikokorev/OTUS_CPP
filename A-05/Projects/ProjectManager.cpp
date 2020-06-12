@@ -8,5 +8,5 @@ FProjectManager& FProjectManager::GetInstance()
 
 bool FProjectManager::HasLoadedProject() const
 {
-    return CurrentProject.operator bool;
+	return CurrentProject.get() != nullptr;
 }

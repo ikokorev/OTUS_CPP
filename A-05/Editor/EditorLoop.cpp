@@ -4,9 +4,6 @@
 #include "Misc/CommandLine.h"
 #include "Misc/Paths.h"
 #include "Misc/Parse.h"
-#include "Widgets/EditorUI.h"
-#include <string>
-#include <iostream>
 
 extern UEditor GEditor;
 extern bool GIsRequestingExit;
@@ -16,7 +13,7 @@ bool ParseProjectPathFromCmdLine(const std::string& CmdLine, std::string& OutPro
 {
     // This is very rough example of how we would parse project file path from cmd line args
     // and store it. I'm using std::string.c_str method just for compile compatibility.
-    bool ParseResult = FParse::Command(FCommandLine::Get().c_str, "-ProjectFilePath", &OutProjectFilePath.c_str);
+    bool ParseResult = FParse::Command(FCommandLine::Get().c_str(), "-ProjectFilePath", const_cast<char&>(*OutProjectFilePath.c_str()));
     if (ParseResult)
     {
         FPaths::SetProjectFilePath(OutProjectFilePath);
@@ -32,8 +29,11 @@ int FEditorLoop::PreInit(const std::string& CmdLine)
     std::string ProjectFilePath {""};
     if (ParseProjectPathFromCmdLine(CmdLine, ProjectFilePath))
     {
-        //SetProjectName(); @todo - remove
         FProjectManager::GetInstance().LoadProjectFromFile(ProjectFilePath);
+    }
+    else
+    {
+        // CreateNewProjectWizard
     }
 
     return 0;

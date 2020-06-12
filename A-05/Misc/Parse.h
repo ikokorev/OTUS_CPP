@@ -22,5 +22,5 @@ public:
      * @param[out] OutValue Out parameter to store command value in, if successfully founded it in stream
      * @return True if managed to found CommandName in Stream, false otherwise.
      */
-    static bool Command(const char* Stream, const char* CommandName, char& OutValue);
+	static bool Command(const char* Stream, const char* CommandName, char& OutValue) { return true; };
 };

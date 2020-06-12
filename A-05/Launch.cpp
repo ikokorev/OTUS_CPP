@@ -41,10 +41,3 @@ int GuardedMain(const std::string& CmdLine)
 
     return ErrorLevel;
 }
-
-/* Exists only for test purposes. */
-void SimulateUserActivity(UEditor& Editor)
-{
-    Editor.GetEditorUI().DocumentsPanel.CreateNewDocumentButton.OnButtonClicked.Broadcast();
-    Editor.GetEditorUI().DocumentsPanel.CreateNewDocumentButton.OnButtonClicked.Broadcast();
-}

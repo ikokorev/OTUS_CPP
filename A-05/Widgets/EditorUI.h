@@ -1,8 +1,8 @@
 #pragma once
 
-#include "BaseClasses/Canvas.h"
-#include "BaseClasses/DrawingField.h"
-#include "Documents/DocumentsPanel.h"
+#include "Project/ProjectActionsPanel.h"
+#include "Framework/Canvas.h"
+#include "Framework/DrawingField.h"
 #include "Instruments/InstrumentPanels/FigureInstrumentsPanel.h"
 #include "Instruments/InstrumentPanels/PrimaryInstrumentsPanel.h"
 
@@ -15,9 +15,8 @@ class UEditorUI : public UCanvas
 public:
     void Init(bool bShouldShowCreateProjectDialog = false);
     
-    // All UI elements here please
     UDrawingField DrawingField;
-    UDocumentsPanel DocumentsPanel;
+    UProjectActionsPanel ProjectActionsPanel;
     UFigureInstrumentsPanel FiguresPanel;
     UPrimaryInstrumentsPanel PrimaryInstrumentsPanel;
 };

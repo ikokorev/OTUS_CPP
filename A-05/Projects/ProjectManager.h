@@ -12,7 +12,7 @@ class FProjectManager
 public:
 
     static FProjectManager& GetInstance();
-    bool LoadProjectFromFile(const std::string& ProjectFile);
+	bool LoadProjectFromFile(const std::string& ProjectFile) { return true; };
     bool HasLoadedProject() const;
 private:
     /** The project that is currently loaded in the editor */

@@ -8,6 +8,5 @@ UControllersManager::UControllersManager(UEditorUI& EditorUI)
 
 void UControllersManager::BindControllersToUIEvents(UEditorUI& EditorUI)
 {
-    DocumentController.BindToDocPanelEvents(EditorUI.DocumentsPanel);
-
+    ProjectActionsController.BindToProjectPanelEvents(EditorUI.ProjectActionsPanel);
 }

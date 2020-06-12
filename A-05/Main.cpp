@@ -19,7 +19,7 @@ std::string ProcessCommandLine(int argc, char* argv[])
 }
 
 int main(int argc, char* argv[])
-{    
+{
     int ErrorLevel = 0;
 
     std::string CmdLine = ProcessCommandLine(argc, argv);

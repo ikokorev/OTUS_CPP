@@ -1,5 +1,6 @@
-/.vscode
+*/.vscode
 *.exe
 *.obj
 *.code-workspace
 **/CMakeFiles
+*/.vs
