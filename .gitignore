@@ -4,3 +4,5 @@
 *.code-workspace
 **/CMakeFiles
 */.vs
+*/out
+*/.idea
