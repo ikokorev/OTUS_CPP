@@ -1,10 +1,15 @@
 #include "CommandLineProcessor.h"
-#include "ConsoleLogger.h"
 #include "FileLogger.h"
 
 #include <algorithm>
 #include <future>
 #include <iostream>
+#include <queue>
+
+std::condition_variable GCommandBatchProcessedCV;
+std::mutex mutex;
+std::queue<CommandBatch> qu;
+std::atomic_bool GAppFinished { false };
 
 bool IsNaturalNumber(const std::string&& String)
 {
@@ -17,26 +22,36 @@ bool IsNaturalNumber(const std::string&& String)
 
 void ConsoleLoggerThread(CommandLineProcessor& CmdProcessor)
 {
-	CmdProcessor.GetOnCommandBatchProcessedDelegate().AddCallback([](const CommandBatch& CommandBatch)
+	while (!GAppFinished || !qu.empty())
 	{
-		std::cout << "MT Log called" << std::endl;
-	});
+		std::unique_lock<std::mutex> lock(mutex);
+		GCommandBatchProcessedCV.wait(lock, []() {return !qu.empty(); });
+
+		std::mutex qmtx;
+		std::unique_lock<std::mutex> qlock(qmtx);
+		
+		auto m = qu.front();
+		qu.pop();
+
+		std::cout << "bulk: " + m.ToString() << std::endl;
+		lock.unlock();
+	}
 }
 
 void FileLoggerThread1(CommandLineProcessor& CmdProcessor)
 {
-	CmdProcessor.GetOnCommandBatchProcessedDelegate().AddCallback([](const CommandBatch& CommandBatch)
+	/*CmdProcessor.GetOnCommandBatchProcessedDelegate().AddCallback([](const CommandBatch& CommandBatch)
 	{
 		std::cout << "MT FT1 called" << std::endl;
-	});
+	});*/
 }
 
 void FileLoggerThread2(CommandLineProcessor& CmdProcessor)
 {
-	CmdProcessor.GetOnCommandBatchProcessedDelegate().AddCallback([](const CommandBatch& CommandBatch)
+	/*CmdProcessor.GetOnCommandBatchProcessedDelegate().AddCallback([](const CommandBatch& CommandBatch)
 	{
 		std::cout << "MT FT2 called" << std::endl;
-	});
+	});*/
 
 	//std::this_thread::sleep_for(std::chrono::seconds(5));
 }
@@ -52,28 +67,16 @@ int main(int argc, char *argv[])
 			{
 				CommandLineProcessor cmdProcessor{ std::stol(givenCommandBatchSize) };
 
-				FileLogger fileLogger;
-				ConsoleLogger consoleLogger;
-
 				auto& commandBatchProcessedDelegate = cmdProcessor.GetOnCommandBatchProcessedDelegate();
-				/*commandBatchProcessedDelegate.AddCallback([FileLoggerPtr = &fileLogger](const CommandBatch& CommandBatch)
+				commandBatchProcessedDelegate.AddCallback([](const CommandBatch& CommandBatch)
 				{
-					FileLoggerPtr->LogCommandBatch(CommandBatch);
-				});*/
-				
-				commandBatchProcessedDelegate.AddCallback([ConsoleLoggerPtr = &consoleLogger](const CommandBatch& CommandBatch)
-				{
-					ConsoleLoggerPtr->LogCommandBatch(CommandBatch);
+					qu.push(CommandBatch);
+					GCommandBatchProcessedCV.notify_all();
 				});
-
+				
 				std::thread t1{ ConsoleLoggerThread, std::ref(cmdProcessor) };
 				std::thread t2{ FileLoggerThread1, std::ref(cmdProcessor) };
 				std::thread t3{ FileLoggerThread2, std::ref(cmdProcessor) };
-
-				
-				t1.join();
-				t2.join();
-				t3.join();
 				
 				std::string commandLine;
 				while (std::cin >> commandLine)
@@ -82,6 +85,11 @@ int main(int argc, char *argv[])
 				}
 
 				cmdProcessor.Flush();
+				GAppFinished = true;
+
+				t1.join();
+				t2.join();
+				t3.join();
 			}
 			else
 			{

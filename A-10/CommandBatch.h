@@ -7,6 +7,7 @@ class CommandBatch
 public:
 	CommandBatch& operator<< (const std::string& Command);
 	std::string GetBatchStartTime() const;
+	std::string ToString() const;
 	const std::vector<std::string>& GetCommands() const;
 	
 	void Clear();

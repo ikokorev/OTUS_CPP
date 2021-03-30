@@ -19,6 +19,21 @@ std::string CommandBatch::GetBatchStartTime() const
 	return BatchStartTime;
 }
 
+std::string CommandBatch::ToString() const
+{
+	std::string result;
+	
+	const auto lastCommand = std::prev(Commands.end());
+	for (auto it = Commands.begin(); it != lastCommand; ++it)
+	{
+		result += *it;
+		result += ", ";
+	}
+	result += *lastCommand;
+
+	return result;
+}
+
 const std::vector<std::string>& CommandBatch::GetCommands() const
 {
 	return Commands;

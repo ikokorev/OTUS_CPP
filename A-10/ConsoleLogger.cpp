@@ -4,5 +4,5 @@
 
 void ConsoleLogger::LogCommandBatch(const CommandBatch& CommandBatch)
 {
-	std::cout << FormCommandBatchLogMessage(CommandBatch) << std::endl;
+	std::cout << "bulk: " + CommandBatch.ToString() << std::endl;
 }
